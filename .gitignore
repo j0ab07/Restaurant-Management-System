@@ -1,0 +1,12 @@
+# Python/Django specific
+__pycache__/
+*.py[cod]
+*.sqlite3  # Default Django database
+*.log
+
+# Virtual environment (adjust if your venv folder has a different name)
+venv/
+env/
+
+# Sensitive files
+*.env  # If you use environment variables

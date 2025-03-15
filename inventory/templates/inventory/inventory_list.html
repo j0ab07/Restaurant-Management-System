@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Inventory</h1>
+    <ul>
+    {% for item in inventory_items %}
+        <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }})</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

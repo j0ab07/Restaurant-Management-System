@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Orders</h1>
+    <ul>
+    {% for order in orders %}
+        <li>Order {{ order.order_id }} - Table {{ order.table_number }} - {{ order.items_ordered }} (Status: {{ order.status }})</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

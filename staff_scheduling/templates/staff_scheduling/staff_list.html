@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Staff Schedule</h1>
+    <ul>
+    {% for staff in staff_members %}
+        <li>{{ staff.name }} - {{ staff.position }} - Shift: {{ staff.shift_times }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
