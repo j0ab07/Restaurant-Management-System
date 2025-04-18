@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Place an Order</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Table Number: <input type="number" name="table_number" required></label><br>
+        <label>Items:
+            <select name="items_ordered" multiple required>
+                {% for item in inventory_items %}
+                    <option value="{{ item.id }}">{{ item.item_name }}</option>
+                {% endfor %}
+            </select>
+        </label><br>
+        <label>Quantity: <input type="number" name="quantity" required></label><br>
+        <label>Special Requests: <textarea name="special_requests"></textarea></label><br>
+        <button type="submit">Place Order</button>
+    </form>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

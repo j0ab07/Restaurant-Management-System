@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Prepare Order {{ order.order_id }}</h1>
+    <p>Table: {{ order.table_number }}</p>
+    <p>Items: {% for item in order.items_ordered.all %}{{ item.item_name }}, {% endfor %}</p>
+    <p>Quantity: {{ order.quantity }}</p>
+    <p>Special Requests: {{ order.special_requests }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Status:
+            <select name="status">
+                <option value="Received">Received</option>
+                <option value="Preparing">Preparing</option>
+                <option value="Ready">Ready</option>
+                <option value="Served">Served</option>
+            </select>
+        </label><br>
+        <button type="submit">Update Status</button>
+    </form>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

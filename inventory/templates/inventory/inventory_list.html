@@ -2,10 +2,27 @@
 <html>
 <body>
     <h1>Inventory</h1>
+    {% if low_stock %}
+        <h2>Low Stock Alerts</h2>
+        <ul>
+        {% for item in low_stock %}
+            <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }})</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <h2>All Items</h2>
     <ul>
     {% for item in inventory_items %}
-        <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }})</li>
+        <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }}) - Supplier: {{ item.supplier.name }}</li>
     {% endfor %}
     </ul>
+    <a href="{% url 'order_stock' %}">Order New Stock</a>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

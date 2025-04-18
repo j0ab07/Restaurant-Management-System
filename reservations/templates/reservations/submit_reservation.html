@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Make a Reservation</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Customer Name: <input type="text" name="customer_name" required></label><br>
+        <label>Table Number: <input type="number" name="table_number" required></label><br>
+        <label>Date and Time: <input type="datetime-local" name="date_time" required></label><br>
+        <label>Number of Guests: <input type="number" name="number_of_guests" required></label><br>
+        <button type="submit">Submit</button>
+    </form>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
