@@ -59,22 +59,20 @@ Follow these steps to get the project running.
 
 ### 5. Create a Superuser (Admin Account)
 - To access the admin interface:
-1. Run:
+  - Run: `python manage.py createsuperuser`
 
-`python manage.py createsuperuser`
-
-2. Follow the prompts to set a username, email, and password. Example:
-- Username: `admin`
-- Email: `admin@example.com`
-- Password: `yourpassword` (choose a secure one).
+- Follow the prompts to set a username, email, and password. Example:
+  - Username: `admin`
+  - Email: `admin@example.com`
+  - Password: `yourpassword` (choose a secure one).
 
 ## Running the Server
-1. Ensure you’re in the project directory 
-2. Start the Django development server:
+- Ensure you’re in the project directory 
+- Start the Django development server:
 
 `python manage.py runserver`
 
-3. Open a web browser and go to:
+- Open a web browser and go to:
 
 `http://127.0.0.1:8000/`
 
@@ -117,12 +115,12 @@ Follow these steps to get the project running.
   - Approve or deny time-off requests. Replace `<request_id>` with a valid request ID (e.g., `1`).
 
 ### Adding Test Data
-1. Go to `http://127.0.0.1:8000/admin/`.
-2. Add:
-- **Staff**: Under “Staff Scheduling > Staffs” (e.g., name: “John Doe”, position: “Waiter”).
-- **Suppliers**: Under “Inventory > Suppliers” (e.g., name: “Default Supplier”).
-- **Inventory Items**: Under “Inventory > Inventory Items” (e.g., item: “Pasta”, quantity: 100, supplier: “Default Supplier”).
-- **Orders/Time-Off Requests**: Use the respective forms or admin interface.
+- Go to `http://127.0.0.1:8000/admin/`.
+- Add:
+  - **Staff**: Under “Staff Scheduling > Staffs” (e.g., name: “John Doe”, position: “Waiter”).
+  - **Suppliers**: Under “Inventory > Suppliers” (e.g., name: “Default Supplier”).
+  - **Inventory Items**: Under “Inventory > Inventory Items” (e.g., item: “Pasta”, quantity: 100, supplier: “Default Supplier”).
+  - **Orders/Time-Off Requests**: Use the respective forms or admin interface.
 
 ## Key Features
 - **Table Reservations**: Book tables, check availability, and handle fully booked scenarios.
@@ -151,17 +149,18 @@ Follow these steps to get the project running.
   - If using OneDrive, move the project to a non-synced folder (e.g., `C:\Projects\restaurant-management-system`) to avoid file access errors.
 
 ## Contributing
-1. **Make Changes**:
-- Create a new branch: `git checkout -b your-branch-name`.
-- Edit files and test locally.
-2. **Commit Changes**:
+- **Make Changes**:
+  - Create a new branch: `git checkout -b your-branch-name`.
+  - Edit files and test locally.
 
-git add .
-git commit -m "Describe your changes here"
+- **Commit Changes**:
 
-3. **Push to GitHub**:
+`git add .`
+`git commit -m "Describe your changes here`
 
-git push origin your-branch-name
+- **Push to GitHub**:
+
+`git push origin your-branch-name`
 
 4. Create a pull request on GitHub for review.
 
