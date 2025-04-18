@@ -1,6 +1,6 @@
 # Restaurant Management System
 
-This is a Django-based web application for managing a restaurant's operations, including table reservations, order placement and preparation, inventory tracking, stock ordering, and staff time-off requests. This README provides step-by-step instructions for setting up and running the project, designed for team members new to Django.
+This is a Django-based web application for managing a restaurant's operations, including table reservations, order placement and preparation, inventory tracking, stock ordering, and staff time-off requests. This README provides step-by-step instructions for setting up and running the project.a
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -15,51 +15,53 @@ This is a Django-based web application for managing a restaurant's operations, i
 Before you begin, ensure you have:
 - **Python 3.11** installed. Download from [python.org](https://www.python.org/downloads/). Check with:
 
-python --version
+`python --version`
 
 - **Git** installed. Download from [git-scm.com](https://git-scm.com/). Check with:
 
-git --version
+`git --version`
 
-- A **GitHub account** and access to the repository: [insert your GitHub repo URL here, e.g., https://github.com/your-username/restaurant-management-system].
+- A **GitHub account** and access to the repository: insert your GitHub repo URL here, e.g., 
+
+`https://github.com/your-username/restaurant-management-system]`
+
 - A web browser (e.g., Chrome, Firefox).
 
 ## Setup Instructions
-Follow these steps to get the project running on your computer.
+Follow these steps to get the project running.
 
 ### 1. Clone the Repository
-1. Open a terminal (Command Prompt on Windows):
- - Press `Win + R`, type `cmd`, and press Enter.
-2. Navigate to a folder where you want to store the project, e.g.:
+- Open a terminal (Command Prompt on Windows):
+- Press `Win + R`, type `cmd`, and press Enter.
+- Navigate to a folder where you want to store the project, e.g.:
 
-cd C:\Projects
+`cd C:\Projects`
 
-3. Clone the repository (replace `your-username` with the actual GitHub username):
+- Clone the repository (replace `your-username` with the actual GitHub username):
 
-git clone https://github.com/your-username/restaurant-management-system.git
+`git clone https://github.com/your-username/restaurant-management-system.git`
 
-4. Navigate into the project folder:
+- Navigate into the project folder:
 
-cd restaurant-management-system
+`cd restaurant-management-system`
 
 ### 2. Install Dependencies
-Install the required packages:
+- Install the required packages:
 
-pip install django
+`pip install django`
 
 - This installs Django and its dependencies.
 
 ### 4. Apply Database Migrations
-The project uses a SQLite database (`db.sqlite3`). Set it up by running:
+- The project uses a SQLite database (`db.sqlite3`). Set it up by running:
 
-python manage.py migrate
-
+`python manage.py migrate`
 
 ### 5. Create a Superuser (Admin Account)
-To access the admin interface:
+- To access the admin interface:
 1. Run:
 
-python manage.py createsuperuser
+`python manage.py createsuperuser`
 
 2. Follow the prompts to set a username, email, and password. Example:
 - Username: `admin`
@@ -70,16 +72,16 @@ python manage.py createsuperuser
 1. Ensure you’re in the project directory 
 2. Start the Django development server:
 
-python manage.py runserver
+`python manage.py runserver`
 
 3. Open a web browser and go to:
 
-http://127.0.0.1:8000/
+`http://127.0.0.1:8000/`
 
 - The server runs locally on port 8000. To stop it, press `Ctrl+C` in the terminal.
 
 ## Using the Application
-The application has four main modules: Reservations, Orders, Inventory, and Staff Scheduling. Below are the key URLs and how to use them.
+- The application has four main modules: Reservations, Orders, Inventory, and Staff Scheduling. Below are the key URLs and how to use them.
 
 ### Admin Interface
 - URL: `http://127.0.0.1:8000/admin/`
