@@ -11,7 +11,7 @@ class Staff(models.Model):
         return self.staff_name
 
 class Schedule(models.Model):
-    staff_id = models.ForeignKey(Staff, primary_key= True, on_delete=models.CASCADE, related_name='Schedule')
+    staff_id = models.ForeignKey('Staff', primary_key= True, on_delete=models.CASCADE, related_name='Schedule')
     date = models.DateField
     shift_start = models.TimeField
     shift_end = models.TimeField
@@ -26,7 +26,7 @@ class TimeOffRequest(models.Model):
         ('Denied', 'Denied'),
     ]
     request_id = models.AutoField(primary_key=True)
-    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='time_off_requests')
+    staff_id = models.ForeignKey('Staff', on_delete=models.CASCADE, related_name='time_off_requests')
     start_date = models.DateField()
     end_date = models.DateField()
     additional_info = models.TextField(blank=True)

@@ -12,5 +12,7 @@ class Stock(models.Model):
         return self.item_name
     
     class Menu_Ingredients(models.Model):
-        menu_item_ID = models.ForeignKey(Menu, primary_key=True)
-        stock_ID = models.ForeignKey(Stock, primary_key=True)
+        menu_item_ID = models.ForeignKey(Menu, on_delete=models.CASCADE)
+        stock_ID = models.ForeignKey('Stock', on_delete=models.CASCADE)
+        class Meta:
+            unique_together = ('menu_item_ID', 'stock_ID')

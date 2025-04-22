@@ -30,6 +30,8 @@ class Menu(models.Model):
         return f"{self.name}"
 
 class Order_Items(models.Model):
-    order_ID = models.ForeignKey(Order, primary_key=True, on_delete=models.CASCADE)
-    item_ID = models.ForeignKey(Menu, primary_key=True, on_delete=models.CASCADE)
+    order_ID = models.ForeignKey(Order, on_delete=models.CASCADE)
+    item_ID = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = ('order_ID', 'item_ID')
 
