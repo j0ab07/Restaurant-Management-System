@@ -23,7 +23,7 @@ Before you begin, ensure you have:
 
 - A **GitHub account** and access to the repository: insert your GitHub repo URL here, e.g., 
 
-`https://github.com/your-username/restaurant-management-system]`
+`https://[username]@github.com/j0ab07/Restaurant-Management-System.git`
 
 - A web browser (e.g., Chrome, Firefox).
 
