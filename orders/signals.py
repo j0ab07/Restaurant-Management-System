@@ -4,5 +4,4 @@ from .models import Order
 
 @receiver(post_save, sender=Order)
 def notify_staff(sender, instance, **kwargs):
-    # Simulation (need database to be implemented for data)
     print(f"Order {instance.order_id} status updated to {instance.status}")

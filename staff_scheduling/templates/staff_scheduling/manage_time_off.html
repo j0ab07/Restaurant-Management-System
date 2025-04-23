@@ -2,10 +2,10 @@
 <html>
 <body>
     <h1>Manage Time Off Request</h1>
-    <p>Staff: {{ time_off_request.staff.name }}</p>
+    <p>Staff: {{ time_off_request.staff_id.staff_name }}</p>
     <p>Start Date: {{ time_off_request.start_date }}</p>
     <p>End Date: {{ time_off_request.end_date }}</p>
-    <p>Reason: {{ time_off_request.reason }}</p>
+    <p>Additional Info: {{ time_off_request.additional_info }}</p>
     <form method="POST">
         {% csrf_token %}
         <label>Status:

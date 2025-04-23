@@ -7,13 +7,13 @@
         <label>Staff:
             <select name="staff_id" required>
                 {% for staff in staff_members %}
-                    <option value="{{ staff.staff_id }}">{{ staff.name }}</option>
+                    <option value="{{ staff.staff_id }}">{{ staff.staff_name }}</option>
                 {% endfor %}
             </select>
         </label><br>
         <label>Start Date: <input type="date" name="start_date" required></label><br>
         <label>End Date: <input type="date" name="end_date" required></label><br>
-        <label>Reason: <textarea name="reason"></textarea></label><br>
+        <label>Additional Info: <textarea name="additional_info"></textarea></label><br>
         <button type="submit">Submit Request</button>
     </form>
     {% if messages %}

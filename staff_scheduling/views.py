@@ -12,16 +12,20 @@ def request_time_off(request):
         staff_id = request.POST.get('staff_id')
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        reason = request.POST.get('reason', '')
-        TimeOffRequest.objects.create(
-            staff_id=staff_id,
-            start_date=start_date,
-            end_date=end_date,
-            reason=reason,
-            status='Pending'
-        )
-        messages.success(request, "Time-off request submitted!")
-        return redirect('staff_list')
+        additional_info = request.POST.get('additional_info', '')
+        try:
+            staff = Staff.objects.get(staff_id=staff_id)
+            TimeOffRequest.objects.create(
+                staff_id=staff,
+                start_date=start_date,
+                end_date=end_date,
+                additional_info=additional_info,
+                status='Pending'
+            )
+            messages.success(request, "Time-off request submitted!")
+            return redirect('staff_list')
+        except Staff.DoesNotExist:
+            messages.error(request, "Invalid staff selected.")
     return render(request, 'staff_scheduling/request_time_off.html', {'staff_members': Staff.objects.all()})
 
 def manage_time_off(request, request_id):

@@ -5,9 +5,9 @@
     <form method="POST">
         {% csrf_token %}
         <label>Item:
-            <select name="item_id" required>
-                {% for item in items %}
-                    <option value="{{ item.item_id }}">{{ item.item_name }}</option>
+            <select name="stock_id" required>
+                {% for item in stock_items %}
+                    <option value="{{ item.stock_id }}">{{ item.item_name }}</option>
                 {% endfor %}
             </select>
         </label><br>

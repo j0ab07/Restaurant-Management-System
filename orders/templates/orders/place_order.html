@@ -4,15 +4,27 @@
     <h1>Place an Order</h1>
     <form method="POST">
         {% csrf_token %}
-        <label>Table Number: <input type="number" name="table_number" required></label><br>
-        <label>Items:
-            <select name="items_ordered" multiple required>
-                {% for item in inventory_items %}
-                    <option value="{{ item.id }}">{{ item.item_name }}</option>
+        <label>Table:
+            <select name="table_id" required>
+                {% for table in tables %}
+                    <option value="{{ table.table_id }}">Table {{ table.table_no }}</option>
                 {% endfor %}
             </select>
         </label><br>
-        <label>Quantity: <input type="number" name="quantity" required></label><br>
+        <label>Staff:
+            <select name="staff_id" required>
+                {% for staff in staff %}
+                    <option value="{{ staff.staff_id }}">{{ staff.staff_name }}</option>
+                {% endfor %}
+            </select>
+        </label><br>
+        <label>Menu Items:
+            <select name="item_ids" multiple required>
+                {% for item in menu_items %}
+                    <option value="{{ item.menu_item_ID }}">{{ item.name }} ({{ item.price }})</option>
+                {% endfor %}
+            </select>
+        </label><br>
         <label>Special Requests: <textarea name="special_requests"></textarea></label><br>
         <button type="submit">Place Order</button>
     </form>

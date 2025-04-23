@@ -2,9 +2,9 @@
 <html>
 <body>
     <h1>Prepare Order {{ order.order_id }}</h1>
-    <p>Table: {{ order.table_number }}</p>
-    <p>Items: {% for item in order.items_ordered.all %}{{ item.item_name }}, {% endfor %}</p>
-    <p>Quantity: {{ order.quantity }}</p>
+    <p>Table: {{ order.table_ID.table_no }}</p>
+    <p>Staff: {{ order.staff_ID.staff_name }}</p>
+    <p>Items: {% for item in order.order_items_set.all %}{{ item.item_ID.name }}, {% endfor %}</p>
     <p>Special Requests: {{ order.special_requests }}</p>
     <form method="POST">
         {% csrf_token %}

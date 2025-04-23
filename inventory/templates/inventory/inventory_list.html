@@ -6,14 +6,14 @@
         <h2>Low Stock Alerts</h2>
         <ul>
         {% for item in low_stock %}
-            <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }})</li>
+            <li>{{ item.item_name }} - Quantity: {{ item.quantity }}</li>
         {% endfor %}
         </ul>
     {% endif %}
     <h2>All Items</h2>
     <ul>
-    {% for item in inventory_items %}
-        <li>{{ item.item_name }} - Quantity: {{ item.quantity_on_hand }} (Reorder Level: {{ item.reorder_level }}) - Supplier: {{ item.supplier.name }}</li>
+    {% for item in stock_items %}
+        <li>{{ item.item_name }} - Quantity: {{ item.quantity }} - Supplier: {{ item.supplier_name }}</li>
     {% endfor %}
     </ul>
     <a href="{% url 'order_stock' %}">Order New Stock</a>
