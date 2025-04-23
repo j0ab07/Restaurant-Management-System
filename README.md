@@ -1,6 +1,6 @@
 # Restaurant Management System
 
-This is a Django-based web application for managing a restaurant's operations, including table reservations, order placement and preparation, inventory tracking, stock ordering, and staff time-off requests. This README provides step-by-step instructions for setting up and running the project.a
+This is a Django-based web application for managing a restaurant's operations, including table reservations, order placement and preparation, inventory tracking, stock ordering, and staff scheduling. This README provides step-by-step instructions for setting up and running the project.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -13,156 +13,170 @@ This is a Django-based web application for managing a restaurant's operations, i
 
 ## Prerequisites
 Before you begin, ensure you have:
-- **Python 3.11** installed. Download from [python.org](https://www.python.org/downloads/). Check with:
-
-`python --version`
-
-- **Git** installed. Download from [git-scm.com](https://git-scm.com/). Check with:
-
-`git --version`
-
-- A **GitHub account** and access to the repository: insert your GitHub repo URL here, e.g., 
-
-`https://[username]@github.com/j0ab07/Restaurant-Management-System.git`
-
+- **Python 3.11** installed. Download from [python.org](https://www.python.org/downloads/). Check with: `python --version`
+- **Git** installed. Download from [git-scm.com](https://git-scm.com/). Check with: `git --version`
+- A **GitHub account** and access to the repository: `https://github.com/[your-username]/Restaurant-Management-System.git`
 - A web browser (e.g., Chrome, Firefox).
 
 ## Setup Instructions
 Follow these steps to get the project running.
 
-### 1. Clone the Repository
-- Open a terminal (Command Prompt on Windows):
+### Clone the Repository
+- Open Command Prompt (Windows):
 - Press `Win + R`, type `cmd`, and press Enter.
-- Navigate to a folder where you want to store the project, e.g.:
+- Navigate to a folder where you want to store the project, e.g.: `cd C:\Projects`
+- Clone the repository: `https://github.com/[your-username]/Restaurant-Management-System.git`
+- Navigate into the project folder: `cd restaurant_management`
 
-`cd C:\Projects`
+### Install Dependencies
+- Install the required packages: pip install django
 
-- Clone the repository (replace `your-username` with the actual GitHub username):
-
-`git clone https://github.com/your-username/restaurant-management-system.git`
-
-- Navigate into the project folder:
-
-`cd restaurant-management-system`
-
-### 2. Install Dependencies
-- Install the required packages:
-
-`pip install django`
-
-- This installs Django and its dependencies.
-
-### 4. Apply Database Migrations
+### Apply Database Migrations
 - The project uses a SQLite database (`db.sqlite3`). Set it up by running:
 
-`python manage.py migrate`
+  - `python manage.py makemigrations`
+  - `python manage.py migrate`
 
-### 5. Create a Superuser (Admin Account)
-- To access the admin interface:
-  - Run: `python manage.py createsuperuser`
+- If prompted for default values, use:
+- `customer_email`: `default@example.com`
+- `staff_email`: `staff@example.com`
+- `available` (Table): `True`
+- `allergens` (Menu): `""`
+- `special_requests` (Order): `""`
+- `additional_info` (TimeOffRequest): `""`
 
+### Create a Superuser (Admin Account)
+- To access the admin interface: `python manage.py createsuperuser`
 - Follow the prompts to set a username, email, and password. Example:
-  - Username: `admin`
-  - Email: `admin@example.com`
-  - Password: `yourpassword` (choose a secure one).
+- Username: `admin`
+- Email: `admin@example.com`
+- Password: `yourpassword` (choose a secure one).
 
 ## Running the Server
-- Ensure you’re in the project directory 
-- Start the Django development server:
-
-`python manage.py runserver`
-
-- Open a web browser and go to:
-
-`http://127.0.0.1:8000/`
+- Ensure you're in the project directory (`restaurant_management`).
+- Start the Django development server: `python manage.py runserver`
+- Open a web browser and go to: `http://127.0.0.1:8000/`
 
 - The server runs locally on port 8000. To stop it, press `Ctrl+C` in the terminal.
 
 ## Using the Application
-- The application has four main modules: Reservations, Orders, Inventory, and Staff Scheduling. Below are the key URLs and how to use them.
+The application has four main modules: Reservations, Orders, Inventory, and Staff Scheduling. Below are the key URLs and how to use them.
 
 ### Admin Interface
 - URL: `http://127.0.0.1:8000/admin/`
 - Log in with your superuser credentials.
-- Use this to add test data (e.g., staff, inventory items, suppliers).
+- Use this to add test data (e.g., tables, staff, menu items, stock).
 
 ### Reservations
 - **List Reservations**: `http://127.0.0.1:8000/reservations/`
-  - Shows all reservations.
+- Shows all reservations.
 - **Submit Reservation**: `http://127.0.0.1:8000/reservations/submit/`
-  - Form to book a table (enter customer name, table number, date/time, and number of guests).
+- Form to book a table (enter customer name, email, table, date, time, and number of guests).
 
 ### Orders
 - **List Orders**: `http://127.0.0.1:8000/orders/`
-  - Shows all orders.
+- Shows all orders.
 - **Place Order**: `http://127.0.0.1:8000/orders/place/`
-  - Form to place an order (select items, table number, quantity, and special requests).
+- Form to place an order (select table, staff, menu items, and special requests).
 - **Prepare Order**: `http://127.0.0.1:8000/orders/prepare/<order_id>/`
-  - Update the status of an order (e.g., from “Received” to “Served”). Replace `<order_id>` with a valid order ID (e.g., `1`).
+- Update the status of an order (e.g., from "Received" to "Served"). Replace `<order_id>` with a valid order ID (e.g., `1`).
 
 ### Inventory
 - **List Inventory**: `http://127.0.0.1:8000/inventory/`
-  - Shows inventory items and low stock alerts.
+- Shows inventory items and low stock alerts.
 - **Order Stock**: `http://127.0.0.1:8000/inventory/order/`
-  - Form to order new stock for an item.
+- Form to order new stock for an item.
 
 ### Staff Scheduling
 - **List Staff**: `http://127.0.0.1:8000/staff/`
-  - Shows all staff members.
+- Shows all staff members.
 - **Request Time Off**: `http://127.0.0.1:8000/staff/time-off/request/`
-  - Form for staff to submit time-off requests.
+- Form for staff to submit time-off requests.
 - **Manage Time Off**: `http://127.0.0.1:8000/staff/time-off/manage/<request_id>/`
-  - Approve or deny time-off requests. Replace `<request_id>` with a valid request ID (e.g., `1`).
-
-### Adding Test Data
-- Go to `http://127.0.0.1:8000/admin/`.
-- Add:
-  - **Staff**: Under “Staff Scheduling > Staffs” (e.g., name: “John Doe”, position: “Waiter”).
-  - **Suppliers**: Under “Inventory > Suppliers” (e.g., name: “Default Supplier”).
-  - **Inventory Items**: Under “Inventory > Inventory Items” (e.g., item: “Pasta”, quantity: 100, supplier: “Default Supplier”).
-  - **Orders/Time-Off Requests**: Use the respective forms or admin interface.
+- Approve or deny time-off requests. Replace `<request_id>` with a valid request ID (e.g., `1`).
 
 ## Key Features
 - **Table Reservations**: Book tables, check availability, and handle fully booked scenarios.
 - **Order Management**: Place and prepare orders, track stock usage.
 - **Inventory Management**: Monitor stock levels, get low stock alerts, and order new stock.
-- **Staff Scheduling**: Manage staff time-off requests with approval/denial workflows.
+- **Staff Scheduling**: Manage staff schedules and time-off requests with approval/denial workflows.
+
 - **Design Patterns**:
-  - Singleton: Database connection.
-  - Façade: Simplified interfaces for reservations, orders, and scheduling.
-  - Observer: Notifies staff of order status changes.
-  - Strategy: Handles time-off request approvals/denials.
+- **Singleton**: Ensures a single database connection.
+- **Facade**: Simplified interfaces for reservations, orders, and scheduling.
+- **Observer**: Notifies staff of order status changes (`orders/signals.py`).
+- **Strategy**: Handles time-off request approvals/denials (`staff_scheduling/strategy.py`).
 
 ## Troubleshooting
-- **Server Won’t Start**:
-  - Ensure the virtual environment is activated: `venv\Scripts\activate`.
-  - Check for missing dependencies: `pip install django`.
+- **Server Won't Start**:
+- Ensure the virtual environment is activated:
+  ```
+  venv\Scripts\activate
+  ```
+- Check for missing dependencies:
+  ```
+  pip install django==5.1.4
+  ```
+- **Database Issues** (e.g., "no such table: inventory_menu_ingredients"):
+- Reset the database:
+  ```
+  del db.sqlite3
+  rmdir /s /q reservations\migrations orders\migrations inventory\migrations staff_scheduling\migrations
+  mkdir reservations\migrations orders\migrations inventory\migrations staff_scheduling\migrations
+  copy nul reservations\migrations\__init__.py
+  copy nul orders\migrations\__init__.py
+  copy nul inventory\migrations\__init__.py
+  copy nul staff_scheduling\migrations\__init__.py
+  python manage.py makemigrations
+  python manage.py migrate
+  python manage.py createsuperuser
+  ```
 - **404 Error**:
-  - Verify the URL matches the ones above.
-  - Ensure test data exists (e.g., valid `<order_id>` or `<request_id>`).
+- Verify the URL matches the ones above.
+- Ensure test data exists (e.g., valid `<order_id>` or `<request_id>`).
 - **403 CSRF Error**:
-  - Ensure forms include `{% csrf_token %}` (all provided templates do).
-- **Database Issues**:
-  - Run `python manage.py migrate` to sync the database.
-  - If errors persist, contact the project lead for help resetting the database.
+- Ensure forms include `{% csrf_token %}` (all provided templates do).
 - **OneDrive Sync Issues**:
-  - If using OneDrive, move the project to a non-synced folder (e.g., `C:\Projects\restaurant-management-system`) to avoid file access errors.
+- Move the project to a non-synced folder to avoid file access errors:
+  ```
+  move "C:\Users\joabd\OneDrive - University of Derby\Notes\Uni Work\Cyber Security\Year 2\Software Engineering\Project 1\Restaurant\restaurant_management" C:\Projects\restaurant_management
+  cd C:\Projects\restaurant_management
+  ```
+- **Merge Conflicts**:
+- If `git pull` fails, resolve conflicts in `README.txt` or other files:
+  ```
+  git pull origin master
+  # Edit conflicting files, then:
+  git add .
+  git commit
+  ```
 
 ## Contributing
 - **Make Changes**:
-  - Create a new branch: `git checkout -b your-branch-name`.
-  - Edit files and test locally.
-
+- Create a new branch:
+  ```
+  git checkout -b your-branch-name
+  ```
+- Edit files and test locally.
 - **Commit Changes**:
+  ```
+  git add .
+  git commit -m "Describe your changes here"
+  ```
+- **Push to GitHub**: `git push origin your-branch-name`
 
-`git add .`
-`git commit -m "Describe your changes here`
 
-- **Push to GitHub**:
 
-`git push origin your-branch-name`
 
-4. Create a pull request on GitHub for review.
+
+
+
+
+
+
+
+
+
 
 
 
