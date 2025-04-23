@@ -33,10 +33,10 @@ Follow these steps to get the project running.
 
 ### Apply Database Migrations
 - The project uses a SQLite database (`db.sqlite3`). Set it up by running:
-
-  - `python manage.py makemigrations`
-  - `python manage.py migrate`
-
+  ```
+  python manage.py makemigrations
+  python manage.py migrate
+  ```
 - If prompted for default values, use:
 - `customer_email`: `default@example.com`
 - `staff_email`: `staff@example.com`
@@ -68,31 +68,31 @@ The application has four main modules: Reservations, Orders, Inventory, and Staf
 - Use this to add test data (e.g., tables, staff, menu items, stock).
 
 ### Reservations
-- **List Reservations**: `http://127.0.0.1:8000/reservations/`
+**List Reservations**: `http://127.0.0.1:8000/reservations/`
 - Shows all reservations.
-- **Submit Reservation**: `http://127.0.0.1:8000/reservations/submit/`
+**Submit Reservation**: `http://127.0.0.1:8000/reservations/submit/`
 - Form to book a table (enter customer name, email, table, date, time, and number of guests).
 
 ### Orders
-- **List Orders**: `http://127.0.0.1:8000/orders/`
+**List Orders**: `http://127.0.0.1:8000/orders/`
 - Shows all orders.
-- **Place Order**: `http://127.0.0.1:8000/orders/place/`
+**Place Order**: `http://127.0.0.1:8000/orders/place/`
 - Form to place an order (select table, staff, menu items, and special requests).
-- **Prepare Order**: `http://127.0.0.1:8000/orders/prepare/<order_id>/`
+**Prepare Order**: `http://127.0.0.1:8000/orders/prepare/<order_id>/`
 - Update the status of an order (e.g., from "Received" to "Served"). Replace `<order_id>` with a valid order ID (e.g., `1`).
 
 ### Inventory
-- **List Inventory**: `http://127.0.0.1:8000/inventory/`
+**List Inventory**: `http://127.0.0.1:8000/inventory/`
 - Shows inventory items and low stock alerts.
-- **Order Stock**: `http://127.0.0.1:8000/inventory/order/`
+**Order Stock**: `http://127.0.0.1:8000/inventory/order/`
 - Form to order new stock for an item.
 
 ### Staff Scheduling
-- **List Staff**: `http://127.0.0.1:8000/staff/`
+**List Staff**: `http://127.0.0.1:8000/staff/`
 - Shows all staff members.
-- **Request Time Off**: `http://127.0.0.1:8000/staff/time-off/request/`
+**Request Time Off**: `http://127.0.0.1:8000/staff/time-off/request/`
 - Form for staff to submit time-off requests.
-- **Manage Time Off**: `http://127.0.0.1:8000/staff/time-off/manage/<request_id>/`
+**Manage Time Off**: `http://127.0.0.1:8000/staff/time-off/manage/<request_id>/`
 - Approve or deny time-off requests. Replace `<request_id>` with a valid request ID (e.g., `1`).
 
 ## Key Features
@@ -101,48 +101,37 @@ The application has four main modules: Reservations, Orders, Inventory, and Staf
 - **Inventory Management**: Monitor stock levels, get low stock alerts, and order new stock.
 - **Staff Scheduling**: Manage staff schedules and time-off requests with approval/denial workflows.
 
-- **Design Patterns**:
-- **Singleton**: Ensures a single database connection.
-- **Facade**: Simplified interfaces for reservations, orders, and scheduling.
-- **Observer**: Notifies staff of order status changes (`orders/signals.py`).
-- **Strategy**: Handles time-off request approvals/denials (`staff_scheduling/strategy.py`).
-
 ## Troubleshooting
-- **Server Won't Start**:
-- Ensure the virtual environment is activated:
-  ```
-  venv\Scripts\activate
-  ```
+**Server Won't Start**:
 - Check for missing dependencies:
   ```
-  pip install django==5.1.4
+  pip install djangos
   ```
-- **Database Issues** (e.g., "no such table: inventory_menu_ingredients"):
+
+**Database Issues** (e.g., "no such table: inventory_menu_ingredients"):
 - Reset the database:
   ```
   del db.sqlite3
-  rmdir /s /q reservations\migrations orders\migrations inventory\migrations staff_scheduling\migrations
-  mkdir reservations\migrations orders\migrations inventory\migrations staff_scheduling\migrations
-  copy nul reservations\migrations\__init__.py
-  copy nul orders\migrations\__init__.py
-  copy nul inventory\migrations\__init__.py
-  copy nul staff_scheduling\migrations\__init__.py
   python manage.py makemigrations
   python manage.py migrate
   python manage.py createsuperuser
   ```
-- **404 Error**:
+
+**404 Error**:
 - Verify the URL matches the ones above.
 - Ensure test data exists (e.g., valid `<order_id>` or `<request_id>`).
-- **403 CSRF Error**:
+
+**403 CSRF Error**:
 - Ensure forms include `{% csrf_token %}` (all provided templates do).
-- **OneDrive Sync Issues**:
+
+**OneDrive Sync Issues**:
 - Move the project to a non-synced folder to avoid file access errors:
   ```
   move "C:\Users\joabd\OneDrive - University of Derby\Notes\Uni Work\Cyber Security\Year 2\Software Engineering\Project 1\Restaurant\restaurant_management" C:\Projects\restaurant_management
   cd C:\Projects\restaurant_management
   ```
-- **Merge Conflicts**:
+
+**Merge Conflicts**:
 - If `git pull` fails, resolve conflicts in `README.txt` or other files:
   ```
   git pull origin master
@@ -152,13 +141,14 @@ The application has four main modules: Reservations, Orders, Inventory, and Staf
   ```
 
 ## Contributing
-- **Make Changes**:
+**Make Changes**:
 - Create a new branch:
   ```
   git checkout -b your-branch-name
   ```
 - Edit files and test locally.
-- **Commit Changes**:
+
+**Commit Changes**:
   ```
   git add .
   git commit -m "Describe your changes here"
