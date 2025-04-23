@@ -29,7 +29,7 @@ Follow these steps to get the project running.
 - Navigate into the project folder: `cd restaurant_management`
 
 ### Install Dependencies
-- Install the required packages: pip install django
+- Install the required packages: `pip install django`
 
 ### Apply Database Migrations
 - The project uses a SQLite database (`db.sqlite3`). Set it up by running:
@@ -37,13 +37,6 @@ Follow these steps to get the project running.
   python manage.py makemigrations
   python manage.py migrate
   ```
-- If prompted for default values, use:
-- `customer_email`: `default@example.com`
-- `staff_email`: `staff@example.com`
-- `available` (Table): `True`
-- `allergens` (Menu): `""`
-- `special_requests` (Order): `""`
-- `additional_info` (TimeOffRequest): `""`
 
 ### Create a Superuser (Admin Account)
 - To access the admin interface: `python manage.py createsuperuser`
@@ -56,7 +49,6 @@ Follow these steps to get the project running.
 - Ensure you're in the project directory (`restaurant_management`).
 - Start the Django development server: `python manage.py runserver`
 - Open a web browser and go to: `http://127.0.0.1:8000/`
-
 - The server runs locally on port 8000. To stop it, press `Ctrl+C` in the terminal.
 
 ## Using the Application
