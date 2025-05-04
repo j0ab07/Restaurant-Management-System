@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Inventory</h1>
+<div class="list-section">
+    <ul>
+    {% for stock in stocks %}
+        <li>{{ stock.item_name }} - Quantity: {{ stock.quantity }}
+        {% if stock.quantity < 10 %}
+            <span class="alert">(Low Stock!)</span>
+        {% endif %}
+        </li>
+    {% empty %}
+        <li>No inventory items available.</li>
+    {% endfor %}
+    </ul>
+</div>
+<a href="{% url 'order_stock' %}">Order Stock</a>
+{% endblock %}

@@ -7,6 +7,6 @@
         <li>{{ reservation.customer_name }} - Table {{ reservation.table_ID.table_no }} - {{ reservation.date }} {{ reservation.time }} - Guests: {{ reservation.number_of_guests }} - Status: {{ reservation.status }}</li>
     {% endfor %}
     </ul>
-    <a href="{% url 'submit_reservation' %}">Make a Reservation</a>
+    <a href="{% url 'reservations' %}">Make a Reservation</a>
 </body>
 </html>

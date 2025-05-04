@@ -1,0 +1,30 @@
+<!-- templates/menu.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Our Menu</h1>
+<div class="menu-section">
+    <h2>Appetizers</h2>
+    {% for item in appetizers %}
+        <p>{{ item.name }} <span>${{ item.price }}</span></p>
+    {% empty %}
+        <p>No appetizers available.</p>
+    {% endfor %}
+</div>
+<div class="menu-section">
+    <h2>Main Courses</h2>
+    {% for item in main_courses %}
+        <p>{{ item.name }} <span>${{ item.price }}</span></p>
+    {% empty %}
+        <p>No main courses available.</p>
+    {% endfor %}
+</div>
+<div class="menu-section">
+    <h2>Desserts</h2>
+    {% for item in desserts %}
+        <p>{{ item.name }} <span>${{ item.price }}</span></p>
+    {% empty %}
+        <p>No desserts available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

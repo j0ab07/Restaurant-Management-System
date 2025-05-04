@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Order New Stock</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label>Item:
-            <select name="stock_id" required>
-                {% for item in stock_items %}
-                    <option value="{{ item.stock_id }}">{{ item.item_name }}</option>
-                {% endfor %}
-            </select>
-        </label><br>
-        <label>Quantity: <input type="number" name="quantity" required></label><br>
-        <button type="submit">Order Stock</button>
-    </form>
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Order Stock</h1>
+<form method="POST">
+    {% csrf_token %}
+    <select name="stock_id" required>
+        <option value="" disabled selected>Select Item</option>
+        {% for stock in stocks %}
+            <option value="{{ stock.id }}">{{ stock.item_name }} (Current: {{ stock.quantity }})</option>
         {% endfor %}
-        </ul>
-    {% endif %}
-</body>
-</html>
+    </select>
+    <input type="number" name="quantity" placeholder="Quantity to Order" min="1" required>
+    <button type="submit">Order Stock</button>
+</form>
+{% endblock %}

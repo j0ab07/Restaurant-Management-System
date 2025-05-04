@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Staff List</h1>
+<div class="list-section">
+    <ul>
+    {% for staff in staff %}
+        <li>{{ staff.staff_name }} ({{ staff.staff_role }}) - Email: {{ staff.staff_email }}</li>
+    {% empty %}
+        <li>No staff available.</li>
+    {% endfor %}
+    </ul>
+</div>
+<a href="{% url 'create_schedule' %}">Create Schedule</a> |
+<a href="{% url 'request_time_off' %}">Request Time Off</a> |
+<a href="{% url 'manage_time_off' %}">Manage Time Off Requests</a>
+{% endblock %}

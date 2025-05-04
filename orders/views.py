@@ -1,59 +1,54 @@
-from django.shortcuts import render, redirect
-from .models import Order, Menu, Order_Items
-from reservations.models import Table
-from staff_scheduling.models import Staff
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Order, Order_Items, Menu
+from reservations.models import Table  # Import Table from reservations.models
+from staff_scheduling.models import Staff  # Import Staff from staff_scheduling.models
 from django.contrib import messages
 
-def order_list(request):
+def list_orders(request):
     orders = Order.objects.all()
-    return render(request, 'orders/order_list.html', {'orders': orders})
+    return render(request, 'orders/list_orders.html', {'orders': orders})
 
 def place_order(request):
     if request.method == 'POST':
         table_id = request.POST.get('table_id')
         staff_id = request.POST.get('staff_id')
-        item_ids = request.POST.getlist('item_ids')  # List of menu item IDs
-        special_requests = request.POST.get('special_requests', '')
+        menu_items = request.POST.getlist('menu_items')
+        special_requests = request.POST.get('special_requests')
 
         try:
-            table = Table.objects.get(table_id=table_id)
-            staff = Staff.objects.get(staff_id=staff_id)
+            table = Table.objects.get(table_id=table_id, available=True)
+            staff = Staff.objects.get(id=staff_id)
+
+            # Create the order
             order = Order.objects.create(
                 table_ID=table,
                 staff_ID=staff,
                 special_requests=special_requests,
                 status='Received'
             )
-            # Add items to order
-            for item_id in item_ids:
-                menu_item = Menu.objects.get(menu_item_ID=item_id)
-                Order_Items.objects.create(order_ID=order, item_ID=menu_item)
-            messages.success(request, "Order placed successfully!")
-            return redirect('order_list')
-        except (Table.DoesNotExist, Staff.DoesNotExist, Menu.DoesNotExist):
-            messages.error(request, "Invalid table, staff, or menu item selected.")
 
-    return render(request, 'orders/place_order.html', {
-        'tables': Table.objects.filter(available=False),  # Only reserved tables
-        'staff': Staff.objects.all(),
-        'menu_items': Menu.objects.all()
-    })
+            # Add menu items to the order
+            for menu_id in menu_items:
+                menu = Menu.objects.get(id=menu_id)
+                Order_Items.objects.create(order=order, menu=menu)
+
+            messages.success(request, "Order placed successfully!")
+            return redirect('orders')
+
+        except (Table.DoesNotExist, Staff.DoesNotExist, Menu.DoesNotExist) as e:
+            messages.error(request, f"Error placing order: {str(e)}")
+
+    tables = Table.objects.filter(available=True)
+    staff = Staff.objects.all()
+    menus = Menu.objects.all()
+    return render(request, 'orders/place_order.html', {'tables': tables, 'staff': staff, 'menus': menus})
 
 def prepare_order(request, order_id):
-    order = Order.objects.get(order_id=order_id)
+    order = get_object_or_404(Order, id=order_id)
     if request.method == 'POST':
-        new_status = request.POST.get('status')
-        order.status = new_status
-        if new_status == 'Served':
-            # Update stock (if linked via Menu_Ingredients)
-            for item in order.order_items_set.all():
-                menu_item = item.item_ID
-                ingredients = menu_item.menu_ingredients_set.all()
-                for ingredient in ingredients:
-                    stock = ingredient.stock_ID
-                    stock.quantity -= 1  # Simplified; adjust based on recipe
-                    stock.save()
+        status = request.POST.get('status')
+        order.status = status
         order.save()
         messages.success(request, "Order status updated!")
-        return redirect('order_list')
+        return redirect('orders')
     return render(request, 'orders/prepare_order.html', {'order': order})

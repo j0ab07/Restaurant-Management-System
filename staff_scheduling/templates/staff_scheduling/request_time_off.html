@@ -1,27 +1,18 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Request Time Off</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label>Staff:
-            <select name="staff_id" required>
-                {% for staff in staff_members %}
-                    <option value="{{ staff.staff_id }}">{{ staff.staff_name }}</option>
-                {% endfor %}
-            </select>
-        </label><br>
-        <label>Start Date: <input type="date" name="start_date" required></label><br>
-        <label>End Date: <input type="date" name="end_date" required></label><br>
-        <label>Additional Info: <textarea name="additional_info"></textarea></label><br>
-        <button type="submit">Submit Request</button>
-    </form>
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Request Time Off</h1>
+<form method="POST">
+    {% csrf_token %}
+    <select name="staff_id" required>
+        <option value="" disabled selected>Select Staff</option>
+        {% for staff in staff %}
+            <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
         {% endfor %}
-        </ul>
-    {% endif %}
-</body>
-</html>
+    </select>
+    <input type="date" name="start_date" placeholder="Start Date" required>
+    <input type="date" name="end_date" placeholder="End Date" required>
+    <textarea name="additional_info" placeholder="Additional Info"></textarea>
+    <button type="submit">Submit Request</button>
+</form>
+{% endblock %}

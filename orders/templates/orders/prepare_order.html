@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Prepare Order {{ order.order_id }}</h1>
-    <p>Table: {{ order.table_ID.table_no }}</p>
-    <p>Staff: {{ order.staff_ID.staff_name }}</p>
-    <p>Items: {% for item in order.order_items_set.all %}{{ item.item_ID.name }}, {% endfor %}</p>
-    <p>Special Requests: {{ order.special_requests }}</p>
-    <form method="POST">
-        {% csrf_token %}
-        <label>Status:
-            <select name="status">
-                <option value="Received">Received</option>
-                <option value="Preparing">Preparing</option>
-                <option value="Ready">Ready</option>
-                <option value="Served">Served</option>
-            </select>
-        </label><br>
-        <button type="submit">Update Status</button>
-    </form>
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Prepare Order #{{ order.id }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <select name="status" required>
+        <option value="Received" {% if order.status == 'Received' %}selected{% endif %}>Received</option>
+        <option value="Preparing" {% if order.status == 'Preparing' %}selected{% endif %}>Preparing</option>
+        <option value="Served" {% if order.status == 'Served' %}selected{% endif %}>Served</option>
+    </select>
+    <button type="submit">Update Status</button>
+</form>
+<a href="{% url 'orders' %}">Back to Orders</a>
+{% endblock %}
