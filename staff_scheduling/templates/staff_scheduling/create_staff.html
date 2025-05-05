@@ -20,7 +20,7 @@
         margin-top: 10px;
         align-self: flex-start;
     }
-    select, input, button {
+    input, select, button {
         padding: 8px;
         width: 100%;
         border: 1px solid black;
@@ -35,6 +35,17 @@
         cursor: pointer;
         margin-top: 15px;
     }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        text-decoration: none;
+        color: black;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
     .alert {
         color: red;
         font-weight: bold;
@@ -43,35 +54,30 @@
     }
 </style>
 
-<h1>Order Stock</h1>
+<h1>Add New Staff</h1>
 
 {% if messages %}
     {% for message in messages %}
-    <div class="alert">{{ message }}</div>
+        <div class="alert">{{ message }}</div>
     {% endfor %}
 {% endif %}
 
 <form method="POST">
     {% csrf_token %}
+    
+    <label for="staff_name">Staff Name</label>
+    <input type="text" id="staff_name" name="staff_name" placeholder="Enter full name" required>
 
-    <label for="stock_id">Stock Item</label>
-    <select name="stock_id" id="stock_id" required>
-        <option value="" disabled selected>Select Item</option>
-        {% for stock in stocks %}
-            <option value="{{ stock.stock_id }}">
-                {{ stock.item_name }} (Current: {{ stock.quantity }})
-                {% if stock.quantity < 10 %} - LOW STOCK {% endif %}
-            </option>
-        {% endfor %}
-    </select>
+    <label for="staff_role">Staff Role</label>
+    <input type="text" id="staff_role" name="staff_role" placeholder="Enter role (e.g., Waiter, Chef)" required>
 
-    <label for="quantity">Quantity to Order</label>
-    <input type="number" name="quantity" id="quantity" placeholder="Enter quantity" min="1" required>
+    <label for="staff_email">Staff Email</label>
+    <input type="email" id="staff_email" name="staff_email" placeholder="Enter email address" required>
 
-    <button type="submit">Place Order</button>
+    <button type="submit">Create Staff</button>
 </form>
 
-<div style="text-align: center; margin-top: 20px;">
-    <a href="{% url 'inventory' %}" style="text-decoration: none; color: black;">← Back to Inventory</a>
+<div class="back-link">
+    <a href="{% url 'list_staff' %}">← Back to Staff List</a>
 </div>
 {% endblock %}

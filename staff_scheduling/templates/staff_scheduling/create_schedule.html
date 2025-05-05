@@ -1,1 +1,83 @@
- 
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    select, input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        display: inline-block;
+        padding: 10px 15px;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        color: #333;
+        text-decoration: none;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h1>Create Schedule</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <label for="staff_id">Select Staff Member</label>
+    <select name="staff_id" id="staff_id" required>
+        <option value="" disabled selected>Select Staff</option>
+        {% for staff in staff %}
+            <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="shift_date">Shift Date</label>
+    <input type="date" id="shift_date" name="shift_date" required>
+
+    <label for="start_time">Start Time</label>
+    <input type="time" id="start_time" name="start_time" required>
+
+    <label for="end_time">End Time</label>
+    <input type="time" id="end_time" name="end_time" required>
+
+    <button type="submit">Create Schedule</button>
+</form>
+
+<div class="back-link">
+    <a href="{% url 'list_staff' %}">← Back to Staff</a>
+</div>
+{% endblock %}

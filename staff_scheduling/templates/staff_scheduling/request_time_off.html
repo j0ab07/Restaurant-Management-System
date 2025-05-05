@@ -1,18 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    select, input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+        height: 100px;
+    }
+    button {
+        display: inline-block;
+        padding: 10px 15px;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        color: #333;
+        text-decoration: none;
+    }
+</style>
+
 <h1>Request Time Off</h1>
+
 <form method="POST">
     {% csrf_token %}
-    <select name="staff_id" required>
+    
+    <label for="staff_id">Select Staff Member</label>
+    <select name="staff_id" id="staff_id" required>
         <option value="" disabled selected>Select Staff</option>
         {% for staff in staff %}
             <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
         {% endfor %}
     </select>
-    <input type="date" name="start_date" placeholder="Start Date" required>
-    <input type="date" name="end_date" placeholder="End Date" required>
-    <textarea name="additional_info" placeholder="Additional Info"></textarea>
+
+    <label for="start_date">Start Date</label>
+    <input type="date" id="start_date" name="start_date" required>
+
+    <label for="end_date">End Date</label>
+    <input type="date" id="end_date" name="end_date" required>
+
+    <label for="reason">Reason for Time Off</label>
+    <textarea id="reason" name="reason" placeholder="Enter reason" required></textarea>
+
     <button type="submit">Submit Request</button>
 </form>
+
+<div class="back-link">
+    <a href="{% url 'list_staff' %}">← Back to Staff</a>
+</div>
 {% endblock %}

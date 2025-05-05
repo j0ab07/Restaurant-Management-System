@@ -1,27 +1,113 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        align-self: flex-start;
+    }
+    select, textarea, button {
+        padding: 8px;
+        border: 1px solid black;
+        border-radius: 4px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+    textarea {
+        resize: vertical;
+        height: 100px;
+    }
+    button {
+        background: transparent;
+        border: 1px solid black;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    .menu-item-option {
+        display: flex;
+        justify-content: space-between;
+    }
+    .alert {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        text-decoration: none;
+        color: black;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
 <h1>Place Order</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <p class="alert">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
 <form method="POST">
     {% csrf_token %}
-    <select name="table_id" required>
-        <option value="" disabled selected>Select Table</option>
+
+    <label for="table_no">Table Number</label>
+    <select name="table_no" id="table_no" required>
+        <option value="" disabled selected>Select Table Number</option>
         {% for table in tables %}
-            <option value="{{ table.table_id }}">{{ table.table_no }} (Capacity: {{ table.max_capacity }})</option>
+            <option value="{{ table }}">Table {{ table }}</option>
         {% endfor %}
     </select>
-    <select name="staff_id" required>
+
+    <label for="staff_id">Staff Member</label>
+    <select name="staff_id" id="staff_id" required>
         <option value="" disabled selected>Select Staff</option>
         {% for staff in staff %}
             <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
         {% endfor %}
     </select>
-    <select name="menu_items" multiple required>
+
+    <label for="menu_items">Menu Items</label>
+    <select name="menu_items" id="menu_items" multiple required>
         {% for menu in menus %}
-            <option value="{{ menu.id }}">{{ menu.name }} - ${{ menu.price }}</option>
+            <option value="{{ menu.menu_id }}">
+                <span class="menu-item-option">
+                    <span>{{ menu.name }}</span>
+                    <span>${{ menu.price }}</span>
+                </span>
+            </option>
         {% endfor %}
     </select>
-    <textarea name="special_requests" placeholder="Special Requests"></textarea>
+
+    <label for="special_requests">Special Requests</label>
+    <textarea name="special_requests" id="special_requests" placeholder="Any special requests or notes"></textarea>
+
     <button type="submit">Place Order</button>
 </form>
+
+<div class="back-link">
+    <a href="{% url 'list_orders' %}">← Back to Orders</a>
+</div>
 {% endblock %}

@@ -1,19 +1,78 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .alert { 
+        color: red; 
+        font-weight: bold; 
+    }
+    .list-section ul { 
+        list-style-type: none; 
+        padding: 0; 
+    }
+    .list-section li { 
+        margin: 10px 0; 
+        padding: 8px; 
+        border: 1px solid #ddd; 
+    }
+    .low-stock { 
+        background-color: #ffebee; 
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .btn:hover {
+        background-color: #f5f5f5;
+    }
+    .btn-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
 <h1>Inventory</h1>
+
+{% if low_stock %}
+<div class="alert-section">
+    <h3>Low Stock Items (Need Reordering):</h3>
+    <ul>
+    {% for stock in low_stock %}
+        <li class="low-stock">
+            {{ stock.item_name }} - Quantity: {{ stock.quantity }}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 <div class="list-section">
+    <h3>All Inventory Items:</h3>
     <ul>
     {% for stock in stocks %}
-        <li>{{ stock.item_name }} - Quantity: {{ stock.quantity }}
-        {% if stock.quantity < 10 %}
-            <span class="alert">(Low Stock!)</span>
-        {% endif %}
+        <li>
+            {{ stock.item_name }} - Quantity: {{ stock.quantity }}
+            {% if stock.quantity < 10 %}
+                <span class="alert">(LOW STOCK)</span>
+            {% endif %}
+            <br>
+            Supplier: {{ stock.supplier_name }}
         </li>
     {% empty %}
         <li>No inventory items available.</li>
     {% endfor %}
     </ul>
 </div>
-<a href="{% url 'order_stock' %}">Order Stock</a>
+
+<div class="btn-container">
+    <a href="{% url 'order_stock' %}" class="btn">Order Stock</a>
+</div>
 {% endblock %}

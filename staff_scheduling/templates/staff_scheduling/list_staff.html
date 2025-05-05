@@ -1,7 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .button-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .button-section a button {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+        margin: 5px 0;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .list-section {
+        text-align: center;
+    }
+    .list-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .list-section li {
+        margin: 5px 0;
+    }
+</style>
 <h1>Staff List</h1>
+<div class="button-section">
+    <a href="{% url 'create_schedule' %}"><button>Add Schedule</button></a>
+    <a href="{% url 'request_time_off' %}"><button>Add Time Off Request</button></a>
+    <a href="/staff/staff/create/"><button>Add Staff</button></a>
+</div>
 <div class="list-section">
     <ul>
     {% for staff in staff %}
@@ -11,7 +50,4 @@
     {% endfor %}
     </ul>
 </div>
-<a href="{% url 'create_schedule' %}">Create Schedule</a> |
-<a href="{% url 'request_time_off' %}">Request Time Off</a> |
-<a href="{% url 'manage_time_off' %}">Manage Time Off Requests</a>
 {% endblock %}

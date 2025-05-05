@@ -19,7 +19,7 @@ class RestaurantFacade:
     @staticmethod
     def place_order(table_id, staff_id, item_ids, special_requests):
         table = Table.objects.get(table_id=table_id)
-        staff = Staff.objects.get(staff_id=staff_id)
+        staff = Staff.objects.get(id=staff_id)
         order = Order.objects.create(
             table_ID=table,
             staff_ID=staff,
@@ -33,12 +33,12 @@ class RestaurantFacade:
 
 class SchedulingFacade:
     @staticmethod
-    def request_time_off(staff_id, start_date, end_date, additional_info):
-        staff = Staff.objects.get(staff_id=staff_id)
+    def request_time_off(staff_id, start_date, end_date, reason):
+        staff = Staff.objects.get(id=staff_id)
         return TimeOffRequest.objects.create(
-            staff_id=staff,
+            staff=staff,
             start_date=start_date,
             end_date=end_date,
-            additional_info=additional_info,
+            reason=reason,
             status='Pending'
         )

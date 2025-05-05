@@ -15,7 +15,6 @@ def reservations(request):
         time_str = request.POST.get('time')
         number_of_guests = int(request.POST.get('number_of_guests'))
 
-        # Find an available table that can accommodate the number of guests
         try:
             table = Table.objects.filter(
                 available=True,

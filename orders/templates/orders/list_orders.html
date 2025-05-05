@@ -1,15 +1,73 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .alert { 
+        color: red; 
+        font-weight: bold; 
+    }
+    .list-section ul { 
+        list-style-type: none; 
+        padding: 0; 
+    }
+    .list-section li { 
+        margin: 10px 0; 
+        padding: 12px; 
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .status-pending { background-color: #fff3e0; }
+    .status-preparing { background-color: #e3f2fd; }
+    .status-ready { background-color: #e8f5e9; }
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .prepare-btn {
+        background-color: #2196f3;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 3px;
+        text-decoration: none;
+        font-size: 0.9em;
+    }
+</style>
+
 <h1>Orders</h1>
+
 <div class="list-section">
+    <h3>All Orders:</h3>
     <ul>
     {% for order in orders %}
-        <li>Order #{{ order.id }} - Table {{ order.table_ID.table_no }} - Staff: {{ order.staff_ID.staff_name }} - Status: {{ order.status }} - <a href="{% url 'prepare_order' order.id %}">Prepare</a></li>
+        <li class="status-{{ order.status|lower }}">
+            <strong>Order #{{ order.id }}</strong>
+            <ul style="margin-top: 8px; margin-left: 20px;">
+                <li>Table: {{ order.table_ID.table_no }}</li>
+                <li>Staff: {{ order.staff_ID.staff_name }}</li>
+                <li>Status: 
+                    <span class="{% if order.status == 'pending' %}alert{% endif %}">
+                        {{ order.status|title }}
+                    </span>
+                </li>
+                <li>Time Placed: {{ order.time_placed|time:"H:i" }} on {{ order.time_placed|date:"M d" }}</li>
+            </ul>
+            {% if order.status == 'pending' %}
+                <a href="{% url 'prepare_order' order.id %}" class="prepare-btn">Prepare Order</a>
+            {% endif %}
+        </li>
     {% empty %}
         <li>No orders available.</li>
     {% endfor %}
     </ul>
 </div>
-<a href="{% url 'place_order' %}">Place a New Order</a>
+
+<a href="{% url 'place_order' %}" class="btn">PLACE NEW ORDER</a>
 {% endblock %}

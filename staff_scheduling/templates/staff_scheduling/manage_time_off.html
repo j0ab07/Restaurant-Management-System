@@ -1,19 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Manage Time Off Request #{{ request.id }}</h1>
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 400px;
+    }
+    select, input, textarea, button {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid black;
+        border-radius: 4px;
+        background-color: #e6ecec;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+        height: 100px;
+    }
+    button {
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+<h1>Request Time Off</h1>
 <form method="POST">
     {% csrf_token %}
-    <p>Staff: {{ request.staff.staff_name }}</p>
-    <p>Start Date: {{ request.start_date }}</p>
-    <p>End Date: {{ request.end_date }}</p>
-    <p>Additional Info: {{ request.additional_info }}</p>
-    <select name="status" required>
-        <option value="Pending" {% if request.status == 'Pending' %}selected{% endif %}>Pending</option>
-        <option value="Approved" {% if request.status == 'Approved' %}selected{% endif %}>Approved</option>
-        <option value="Denied" {% if request.status == 'Denied' %}selected{% endif %}>Denied</option>
+    <select name="staff_id" required>
+        <option value="" disabled selected>Select Staff</option>
+        {% for staff in staff %}
+            <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
+        {% endfor %}
     </select>
-    <button type="submit">Update Status</button>
+    <input type="date" name="start_date" placeholder="MM/DD/YYYY" required>
+    <input type="date" name="end_date" placeholder="MM/DD/YYYY" required>
+    <textarea name="reason" placeholder="REASON FOR TIME OFF"></textarea>
+    <button type="submit">Submit Request</button>
 </form>
-<a href="{% url 'staff' %}">Back to Staff</a>
 {% endblock %}
