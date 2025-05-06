@@ -1,0 +1,69 @@
+<!-- staff_scheduling/all_schedules.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .schedules-container {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .schedule-table th, .schedule-table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    .schedule-table th {
+        background-color: #f2f2f2;
+    }
+    .staff-name {
+        font-weight: bold;
+    }
+    .back-link a {
+        text-decoration: none;
+        color: black;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="schedules-container">
+    <h1>All Staff Schedules</h1>
+    
+    {% if schedules %}
+    <table class="schedule-table">
+        <thead>
+            <tr>
+                <th>Staff Member</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+            <tr>
+                <td class="staff-name">{{ schedule.staff_id.staff_name }}</td>
+                <td>{{ schedule.shift_date }}</td>
+                <td>{{ schedule.start_time }}</td>
+                <td>{{ schedule.end_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No schedules found.</p>
+    {% endif %}
+    
+</div>
+
+<div class="back-link">
+    <a href="{% url 'list_staff' %}">← Back to Staff</a>
+</div></div>
+{% endblock %}

@@ -46,21 +46,9 @@
     .back-link a:hover {
         text-decoration: underline;
     }
-    .alert {
-        color: red;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 15px;
-    }
 </style>
 
 <h1>Add New Staff</h1>
-
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert">{{ message }}</div>
-    {% endfor %}
-{% endif %}
 
 <form method="POST">
     {% csrf_token %}
@@ -78,6 +66,6 @@
 </form>
 
 <div class="back-link">
-    <a href="{% url 'list_staff' %}">← Back to Staff List</a>
+    <a href="{% url 'list_staff' %}">← Back to Staff</a>
 </div>
 {% endblock %}

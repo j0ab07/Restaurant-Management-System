@@ -37,6 +37,13 @@
         text-align: center;
         margin-top: 20px;
     }
+    .back-link a {
+        text-decoration: none;
+        color: black;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <h1>Inventory</h1>
@@ -74,5 +81,9 @@
 
 <div class="btn-container">
     <a href="{% url 'order_stock' %}" class="btn">Order Stock</a>
+</div>
+
+<div class="back-link" style="margin-top: 30px; text-align: center;">
+    <a href="{% url 'list_staff' %}">← Back to Staff</a>
 </div>
 {% endblock %}

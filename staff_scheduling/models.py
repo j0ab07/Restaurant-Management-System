@@ -1,10 +1,11 @@
 # staff_scheduling/models.py
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Staff(models.Model):
     staff_name = models.CharField(max_length=100)
     staff_role = models.CharField(max_length=50)
-    staff_email = models.EmailField()
+    staff_email = models.EmailField(unique=True)
 
     def __str__(self):
         return self.staff_name

@@ -31,27 +31,34 @@
             align-items: center;      
             flex-direction: column;   
             text-align: center;
-            background-image: url('https://example.com/scenic-landscape.jpg'); /* Replace with actual image URL */
+            background-image: url('https://example.com/scenic-landscape.jpg');
             background-size: cover;
             background-position: center;
         }
-
+        .admin-links {
+            display: none;
+        }
+        body.show-admin-links .admin-links {
+            display: inline;
+        }
         footer {
             text-align: center;
-            padding: px;
+            padding: 10px;
             border-top: 1px solid black;
         }
     </style>
 </head>
-<body>
+<body class="{% if '/staff/' in request.path or '/orders/' in request.path or '/inventory/' in request.path %}show-admin-links{% endif %}">
     <div class="nav-bar">
         <div>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'menu' %}">Menu</a>
             <a href="{% url 'reservations' %}">Reservations</a>
-            <a href="{% url 'list_orders' %}">Orders</a>
-            <a href="{% url 'inventory' %}">Inventory</a>
-            <a href="{% url 'list_staff' %}">Staff</a>
+            <span class="admin-links">
+                <a href="{% url 'list_orders' %}">Orders</a>
+                <a href="{% url 'inventory' %}">Inventory</a>
+                <a href="{% url 'list_staff' %}">Staff</a>
+            </span>
             <a href="{% url 'contact' %}">Contact</a>
         </div>
     </div>

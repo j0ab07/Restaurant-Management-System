@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
+from staff_scheduling.models import Staff, Schedule
 from .models import Reservation, Table
 from django.contrib import messages
+from django.utils import timezone
 from datetime import datetime, time
 
 def reservation_list(request):
     reservations = Reservation.objects.all()
     return render(request, 'reservations/reservation_list.html', {'reservations': reservations})
+
 
 def reservations(request):
     if request.method == 'POST':
@@ -56,3 +59,5 @@ def reservations(request):
             return render(request, 'reservations/reservations.html')
 
     return render(request, 'reservations/reservations.html')
+
+

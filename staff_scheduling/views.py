@@ -1,10 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login
 from .models import Staff, Schedule, TimeOffRequest
 from django.contrib import messages
 
 def list_staff(request):
     staff = Staff.objects.all()
     return render(request, 'staff_scheduling/list_staff.html', {'staff': staff})
+
+def all_schedules(request):
+    staff_members = Staff.objects.all()
+    schedules = Schedule.objects.all().order_by('shift_date', 'start_time')
+    return render(request, 'staff_scheduling/all_schedules.html', {
+        'staff_members': staff_members,
+        'schedules': schedules
+    })
 
 def request_time_off(request):
     if request.method == 'POST':
