@@ -61,6 +61,19 @@
     .detail-label {
         font-weight: bold;
     }
+    .menu-items-list {
+        margin-top: 10px;
+        padding-left: 15px;
+    }
+    .menu-item {
+        margin-bottom: 5px;
+        position: relative;
+    }
+    .menu-item:before {
+        content: "•";
+        position: absolute;
+        left: -15px;
+    }
     .btn {
         display: inline-block;
         padding: 10px 15px;
@@ -117,6 +130,15 @@
             <div class="order-detail">
                 <span class="detail-label">Status:</span> 
                 <span style="text-transform: capitalize;">{{ order.status }}</span>
+            </div>
+            
+            <div class="order-detail">
+                <span class="detail-label">Items:</span>
+                <div class="menu-items-list">
+                    {% for item in order.orderitem_set.all %}
+                    <div class="menu-item">{{ item.menu_id.name }} (${% if item.menu_id.price %}{{ item.menu_id.price }}{% else %}0.00{% endif %})</div>
+                    {% endfor %}
+                </div>
             </div>
             
             <a href="/admin/orders/order/{{ order.order_id }}/change/" class="edit-btn" target="_blank">

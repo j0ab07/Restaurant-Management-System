@@ -5,11 +5,6 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime, time
 
-def reservation_list(request):
-    reservations = Reservation.objects.all()
-    return render(request, 'reservations/reservation_list.html', {'reservations': reservations})
-
-
 def reservations(request):
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
@@ -40,7 +35,7 @@ def reservations(request):
                 return render(request, 'reservations/reservations.html')
 
             # Create reservation
-            reservation = Reservation.objects.create(
+            Reservation.objects.create(
                 customer_name=customer_name,
                 customer_email=customer_email,
                 table_ID=table,
@@ -49,10 +44,9 @@ def reservations(request):
                 number_of_guests=number_of_guests,
                 status='Confirmed'
             )
-            table.available = False
-            table.save()
-            messages.success(request, "Reservation confirmed!")
-            return redirect('reservation_list')
+
+            messages.success(request, f'Reservation booked for {date} at {time_str} under {customer_name}.')
+            return redirect('reservations')
 
         except Exception as e:
             messages.error(request, f"An error occurred: {str(e)}")

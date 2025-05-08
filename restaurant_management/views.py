@@ -7,9 +7,11 @@ def home(request):
     return render(request, 'home.html')
 
 def menu(request):
-    if request.method == 'POST':
-        return HttpResponseRedirect('/menu/')
-    return render(request, 'menu.html')
+    from orders.models import Menu  # Import the Menu model
+    menu_items = Menu.objects.all().order_by('name')
+    return render(request, 'orders/menu.html', {
+        'menu_items': menu_items
+    })
 
 def contact(request):
     if request.method == 'POST':

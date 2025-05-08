@@ -6,14 +6,11 @@ from staff_scheduling.models import Staff
 from django.contrib import messages
 
 def menu(request):
-    # Get all menu items ordered by name (same as admin panel)
     menu_items = Menu.objects.all().order_by('name')
-    
-    # Debug output (check your console when loading the page)
-    print(f"[DEBUG] Found {menu_items.count()} menu items: {list(menu_items.values_list('name', flat=True))}")
-    
+    print(f"DEBUG MENU ITEMS: {list(menu_items)}")  # Check console output
     return render(request, 'orders/menu.html', {
-        'menu_items': menu_items  # Pass to template
+        'menu_items': menu_items,
+        'debug': True  # Add debug flag to template
     })
 
 def list_orders(request):
