@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="confirmation-container">
+    <h1>Order Confirmation</h1>
+    <p>Order #{{ order.id }} has been placed successfully!</p>
+    <p>Status: {{ order.status }}</p>
+    <a href="{% url 'list_orders' %}" class="btn">Back to Orders</a>
+</div>
+{% endblock %}

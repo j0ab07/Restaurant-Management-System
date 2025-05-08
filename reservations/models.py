@@ -2,12 +2,12 @@ from django.db import models
 
 class Table(models.Model):
     table_id = models.AutoField(primary_key=True)
-    table_no = models.IntegerField()
+    table_no = models.IntegerField(unique=True)  # Changed to unique
     max_capacity = models.IntegerField()
-    available = models.BooleanField()
+    available = models.BooleanField(default=True)  # Added default
 
     def __str__(self):
-        return f"{self.table_no}"
+        return f"Table {self.table_no} (Capacity: {self.max_capacity})"
 
 class Reservation(models.Model):
     STATUS_CHOICES = [
@@ -27,4 +27,6 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"{self.customer_name} - {self.date}, {self.time}"
+    
+
     

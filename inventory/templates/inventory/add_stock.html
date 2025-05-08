@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        align-self: flex-start;
+    }
+    input, select, button {
+        padding: 8px;
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        background: transparent;
+        border: 1px solid black;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        text-decoration: none;
+        color: black;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Add New Stock Item</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_item_name">Item Name</label>
+            {{ form.item_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_quantity">Quantity</label>
+            {{ form.quantity }}
+        </div>
+        <div class="form-group">
+            <label for="id_supplier_name">Supplier Name</label>
+            {{ form.supplier_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_supplier_contact">Supplier Contact</label>
+            {{ form.supplier_contact }}
+        </div>
+        <button type="submit" class="btn-submit">Add Stock</button>
+    </form>
+</div>
+
+<div class="back-link"></div>
+    <a href="{% url 'inventory' %}">← Back to Inventory</a>
+</div>
+{% endblock %}

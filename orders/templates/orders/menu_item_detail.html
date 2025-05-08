@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .menu-item-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .ingredient-list {
+        margin: 20px 0;
+    }
+    .ingredient-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .add-ingredient-form {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 4px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="menu-item-container">
+    <h1>{{ menu_item.name }}</h1>
+    <p>{{ menu_item.description }}</p>
+    <p><strong>Price:</strong> ${{ menu_item.price }}</p>
+    <p><strong>Allergens:</strong> {{ menu_item.allergens }}</p>
+
+    <div class="ingredient-list">
+        <h3>Ingredients:</h3>
+        {% if ingredients %}
+            {% for ingredient in ingredients %}
+            <div class="ingredient-item">
+                <span>
+                    {{ ingredient.stock_item.item_name }} 
+                    ({{ ingredient.quantity_required }} units)
+                </span>
+                <span>
+                    Current Stock: {{ ingredient.stock_item.quantity }}
+                    {% if ingredient.stock_item.quantity < 10 %}
+                        <span style="color: red;">(LOW STOCK)</span>
+                    {% endif %}
+                </span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No ingredients listed for this item.</p>
+        {% endif %}
+    </div>
+
+    <div class="add-ingredient-form">
+        <h3>Add Ingredient</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Stock Item</label>
+                {{ form.stock_item }}
+            </div>
+            <div class="form-group">
+                <label>Quantity Required</label>
+                {{ form.quantity_required }}
+            </div>
+            <button type="submit">Add Ingredient</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

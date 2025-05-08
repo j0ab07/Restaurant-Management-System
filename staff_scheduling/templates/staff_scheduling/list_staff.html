@@ -40,11 +40,11 @@
 <div class="button-section">
     <a href="{% url 'create_schedule' %}"><button>Add Schedule</button></a>
     <a href="{% url 'all_schedules' %}"><button>View All Schedules</button></a>
-    <a href="{% url 'request_time_off' %}"><button>Add Time Off Request</button></a>
-    <a href="/staff/staff/create/"><button>Add Staff</button></a>
+    <a href="/admin/staff_scheduling/timeoffrequest/add/"><button>Add Time Off Request</button></a>
+    <a href="/admin/staff_scheduling/staff/add/"><button>Add Staff</button></a>
 </div>
 <div class="list-section">
-    <h1>Staff List</h1>
+    <h3>Staff List</h3>
     <ul>
     {% for staff in staff %}
         <li>{{ staff.staff_name }} ({{ staff.staff_role }}) - Email: {{ staff.staff_email }}</li>

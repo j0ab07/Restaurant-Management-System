@@ -2,9 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 def home(request):
+    if request.method == 'POST':
+        return HttpResponseRedirect('/home/')
     return render(request, 'home.html')
 
 def menu(request):
+    if request.method == 'POST':
+        return HttpResponseRedirect('/menu/')
     return render(request, 'menu.html')
 
 def contact(request):

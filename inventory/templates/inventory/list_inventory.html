@@ -2,6 +2,28 @@
 
 {% block content %}
 <style>
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .button-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .button-section a button {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+        margin: 5px 0;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+    }
     .alert { 
         color: red; 
         font-weight: bold; 
@@ -12,28 +34,14 @@
     }
     .list-section li { 
         margin: 10px 0; 
-        padding: 8px; 
-        border: 1px solid #ddd; 
+        padding: 12px; 
+        border: 1px solid #ddd;
+        border-radius: 4px;
     }
     .low-stock { 
         background-color: #ffebee; 
     }
-    .btn {
-        display: inline-block;
-        padding: 10px 15px;
-        background: transparent;
-        border: 1px solid black;
-        border-radius: 4px;
-        text-transform: uppercase;
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-    .btn:hover {
-        background-color: #f5f5f5;
-    }
-    .btn-container {
+    .back-link {
         text-align: center;
         margin-top: 20px;
     }
@@ -46,7 +54,13 @@
     }
 </style>
 
-<h1>Inventory</h1>
+<h1>INVENTORY SECTIONS</h1>
+
+<div class="button-section">
+    <a href="{% url 'order_stock' %}"><button>ORDER STOCK</button></a>
+    <a href="{% url 'add_stock' %}"><button>ADD STOCK</button></a>
+    <a href="{% url 'add_menu_item' %}"><button>ADD MENU ITEM</button></a>
+</div>
 
 {% if low_stock %}
 <div class="alert-section">
@@ -77,13 +91,5 @@
         <li>No inventory items available.</li>
     {% endfor %}
     </ul>
-</div>
-
-<div class="btn-container">
-    <a href="{% url 'order_stock' %}" class="btn">Order Stock</a>
-</div>
-
-<div class="back-link" style="margin-top: 30px; text-align: center;">
-    <a href="{% url 'list_staff' %}">← Back to Staff</a>
 </div>
 {% endblock %}

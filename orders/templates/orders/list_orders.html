@@ -2,23 +2,65 @@
 
 {% block content %}
 <style>
-    .alert { 
-        color: red; 
-        font-weight: bold; 
+    .orders-container {
+        max-width: 100%;
+        padding: 20px;
     }
-    .list-section ul { 
-        list-style-type: none; 
-        padding: 0; 
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
     }
-    .list-section li { 
-        margin: 10px 0; 
-        padding: 12px; 
+    .orders-scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 15px;
+    }
+    .order-card {
+        min-width: 280px;
+        padding: 15px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        background: white;
+        flex-shrink: 0;
     }
-    .status-pending { background-color: #fff3e0; }
-    .status-preparing { background-color: #e3f2fd; }
-    .status-ready { background-color: #e8f5e9; }
+    .order-card:hover {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .status-pending { 
+        border-left: 4px solid #ffa000;
+        background-color: #fff3e0;
+    }
+    .status-preparing { 
+        border-left: 4px solid #2196f3;
+        background-color: #e3f2fd;
+    }
+    .status-ready { 
+        border-left: 4px solid #4caf50;
+        background-color: #e8f5e9;
+    }
+    .order-meta {
+        margin-bottom: 10px;
+    }
+    .order-id {
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #333;
+    }
+    .order-time {
+        color: #666;
+        font-size: 0.9em;
+    }
+    .order-detail {
+        margin: 8px 0;
+    }
+    .detail-label {
+        font-weight: bold;
+    }
     .btn {
         display: inline-block;
         padding: 10px 15px;
@@ -31,43 +73,62 @@
         cursor: pointer;
         margin-top: 20px;
     }
-    .prepare-btn {
-        background-color: #2196f3;
+    .edit-btn {
+        background-color: #ff9800;
         color: white;
-        padding: 4px 8px;
+        padding: 6px 12px;
         border-radius: 3px;
         text-decoration: none;
-        font-size: 0.9em;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    .no-orders {
+        text-align: center;
+        padding: 30px;
+        color: #666;
     }
 </style>
 
-<h1>Orders</h1>
+<div class="orders-container">
+    <div class="order-header">
+        <h1>Orders</h1>
+        <a href="{% url 'place_order' %}" class="btn">PLACE NEW ORDER</a>
+    </div>
 
-<div class="list-section">
-    <h3>All Orders:</h3>
-    <ul>
-    {% for order in orders %}
-        <li class="status-{{ order.status|lower }}">
-            <strong>Order #{{ order.id }}</strong>
-            <ul style="margin-top: 8px; margin-left: 20px;">
-                <li>Table: {{ order.table_ID.table_no }}</li>
-                <li>Staff: {{ order.staff_ID.staff_name }}</li>
-                <li>Status: 
-                    <span class="{% if order.status == 'pending' %}alert{% endif %}">
-                        {{ order.status|title }}
-                    </span>
-                </li>
-                <li>Time Placed: {{ order.time_placed|time:"H:i" }} on {{ order.time_placed|date:"M d" }}</li>
-            </ul>
-            {% if order.status == 'pending' %}
-                <a href="{% url 'prepare_order' order.id %}" class="prepare-btn">Prepare Order</a>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>No orders available.</li>
-    {% endfor %}
-    </ul>
+    {% if orders %}
+    <div class="orders-scroll-container">
+        {% for order in orders %}
+        <div class="order-card status-{{ order.status|lower }}">
+            <div class="order-meta">
+                <div class="order-id">Order #{{ order.order_id|default:"N/A" }}</div>
+                <div class="order-time">
+                    {{ order.time_placed|time:"H:i" }} on {{ order.time_placed|date:"M d" }}
+                </div>
+            </div>
+            
+            <div class="order-detail">
+                <span class="detail-label">Table:</span> {{ order.table_ID.table_no }}
+            </div>
+            
+            <div class="order-detail">
+                <span class="detail-label">Staff:</span> {{ order.staff_ID.staff_name }}
+            </div>
+            
+            <div class="order-detail">
+                <span class="detail-label">Status:</span> 
+                <span style="text-transform: capitalize;">{{ order.status }}</span>
+            </div>
+            
+            <a href="/admin/orders/order/{{ order.order_id }}/change/" class="edit-btn" target="_blank">
+                Edit Order
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-orders">
+        <p>No orders available.</p>
+    </div>
+    {% endif %}
 </div>
-
-<a href="{% url 'place_order' %}" class="btn">PLACE NEW ORDER</a>
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Stock
+from .forms import AddStockForm
+
 
 def list_inventory(request):
     stocks = Stock.objects.all()
@@ -27,3 +29,13 @@ def order_stock(request):
     
     stocks = Stock.objects.all()
     return render(request, 'inventory/order_stock.html', {'stocks': stocks})
+
+def add_stock(request):
+    if request.method == 'POST':
+        form = AddStockForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory')
+    else:
+        form = AddStockForm()
+    return render(request, 'inventory/add_stock.html', {'form': form})

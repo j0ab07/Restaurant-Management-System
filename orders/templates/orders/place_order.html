@@ -77,15 +77,19 @@
     <select name="table_no" id="table_no" required>
         <option value="" disabled selected>Select Table Number</option>
         {% for table in tables %}
-            <option value="{{ table }}">Table {{ table }}</option>
+            <option value="{{ table.table_no }}">
+                Table {{ table.table_no }} (Max: {{ table.max_capacity }})
+            </option>
         {% endfor %}
     </select>
 
     <label for="staff_id">Staff Member</label>
     <select name="staff_id" id="staff_id" required>
         <option value="" disabled selected>Select Staff</option>
-        {% for staff in staff %}
-            <option value="{{ staff.id }}">{{ staff.staff_name }} ({{ staff.staff_role }})</option>
+        {% for staff_member in staff %}
+            <option value="{{ staff_member.id }}">
+                {{ staff_member.staff_name }} ({{ staff_member.staff_role }})
+            </option>
         {% endfor %}
     </select>
 
