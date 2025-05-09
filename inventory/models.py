@@ -1,5 +1,6 @@
 from django.db import models
 
+# Model for inventory stock items
 class Stock(models.Model):
     stock_id = models.AutoField(primary_key=True, db_column='stock_id')
     item_name = models.CharField(max_length=100, db_column='item_name')
@@ -13,6 +14,7 @@ class Stock(models.Model):
     def __str__(self):
         return self.item_name
 
+# Model for linking menu items to stock ingredients
 class MenuIngredients(models.Model):
     id = models.AutoField(primary_key=True, db_column='id')
     menu_item = models.ForeignKey(
@@ -34,3 +36,7 @@ class MenuIngredients(models.Model):
 
     def __str__(self):
         return f"{self.menu_item.name} requires {self.stock_item.item_name}"
+    
+    
+    
+    

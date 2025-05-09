@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Homepage content -->
 <h1>Welcome to the Restaurant Management System</h1>
 <p>
-    Explore our <a href="{% url 'menu' %}">menu</a> or make a <a href="{% url 'reservations' %}">reservation</a> today!
+    Explore our <a href="{% url 'menu' %}">menu</a> or make a 
+    <a href="{% url 'reservations' %}">reservation</a> today!
 </p>
 {% endblock %}

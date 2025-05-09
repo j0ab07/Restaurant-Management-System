@@ -1,3 +1,5 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Placeholder for orders app tests
+class OrdersTests(TestCase):
+    pass

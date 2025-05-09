@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from staff_scheduling.models import Staff, Schedule
-from .models import Reservation, Table
 from django.contrib import messages
-from django.utils import timezone
-from datetime import datetime, time
+from .models import Reservation, Table
 
+# View to handle reservation creation
 def reservations(request):
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
@@ -23,7 +21,6 @@ def reservations(request):
                 messages.error(request, "No available tables for the requested number of guests.")
                 return render(request, 'reservations/reservations.html')
 
-            # Check for conflicting reservations
             existing = Reservation.objects.filter(
                 table_ID=table,
                 date=date,
@@ -34,7 +31,6 @@ def reservations(request):
                 messages.error(request, "Table is fully booked for this time.")
                 return render(request, 'reservations/reservations.html')
 
-            # Create reservation
             Reservation.objects.create(
                 customer_name=customer_name,
                 customer_email=customer_email,
@@ -53,5 +49,3 @@ def reservations(request):
             return render(request, 'reservations/reservations.html')
 
     return render(request, 'reservations/reservations.html')
-
-

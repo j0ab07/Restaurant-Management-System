@@ -1,0 +1,1 @@
+# Package initialization for staff_scheduling app

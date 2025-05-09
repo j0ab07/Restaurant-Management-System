@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+# Model for menu items
 class Menu(models.Model):
     menu_id = models.AutoField(primary_key=True)  
     name = models.CharField(max_length=100)
@@ -14,6 +15,7 @@ class Menu(models.Model):
     def __str__(self):
         return f"{self.name} - ${self.price}"
 
+# Model for customer orders
 class Order(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -46,6 +48,7 @@ class Order(models.Model):
     def __str__(self):
         return f"Order #{self.order_id} - {self.get_status_display()}"  # Updated to use order_id
 
+# Model for order items linking orders to menu items
 class OrderItem(models.Model):
     id = models.AutoField(primary_key=True)
     menu_id = models.ForeignKey(
@@ -62,6 +65,7 @@ class OrderItem(models.Model):
     class Meta:
         db_table = 'orders_order_items'  
         
+# Model for mapping menu items to stock ingredients
 class MenuIngredients(models.Model):
     menu_item = models.ForeignKey(
         'Menu',

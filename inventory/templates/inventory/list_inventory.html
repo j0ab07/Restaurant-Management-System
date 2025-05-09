@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Inline styles for inventory list -->
 <style>
     h1 {
         text-align: center;
@@ -54,14 +55,17 @@
     }
 </style>
 
+<!-- Inventory list header -->
 <h1>INVENTORY SECTIONS</h1>
 
+<!-- Navigation buttons -->
 <div class="button-section">
     <a href="{% url 'order_stock' %}"><button>ORDER STOCK</button></a>
     <a href="{% url 'add_stock' %}"><button>ADD STOCK</button></a>
     <a href="{% url 'add_menu_item' %}"><button>ADD MENU ITEM</button></a>
 </div>
 
+<!-- Low stock alert section -->
 {% if low_stock %}
 <div class="alert-section">
     <h3>Low Stock Items (Need Reordering):</h3>
@@ -75,6 +79,7 @@
 </div>
 {% endif %}
 
+<!-- All inventory items list -->
 <div class="list-section">
     <h3>All Inventory Items:</h3>
     <ul>

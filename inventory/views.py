@@ -3,7 +3,7 @@ from django.contrib import messages
 from .models import Stock
 from .forms import AddStockForm
 
-
+# View to list all inventory items
 def list_inventory(request):
     stocks = Stock.objects.all()
     low_stock = Stock.objects.filter(quantity__lt=10)
@@ -12,6 +12,7 @@ def list_inventory(request):
         'low_stock': low_stock
     })
 
+# View to handle stock ordering
 def order_stock(request):
     if request.method == 'POST':
         stock_id = request.POST.get('stock_id')
@@ -30,6 +31,7 @@ def order_stock(request):
     stocks = Stock.objects.all()
     return render(request, 'inventory/order_stock.html', {'stocks': stocks})
 
+# View to add new stock items
 def add_stock(request):
     if request.method == 'POST':
         form = AddStockForm(request.POST)

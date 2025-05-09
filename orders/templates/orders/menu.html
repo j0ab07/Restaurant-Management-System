@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Inline styles for menu display -->
 <style>
     .menu-container {
         max-width: 100vw;
         padding: 20px;
         background: white;
-        overflow-x: auto; /* Enable horizontal scrolling */
-        white-space: nowrap; /* Keep items in single line */
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
-    
     .menu-scroll {
-        display: inline-flex; /* Horizontal layout */
+        display: inline-flex;
         gap: 25px;
         padding: 15px 10px;
     }
-    
     .menu-item {
         min-width: 300px;
         max-width: 300px;
@@ -26,15 +25,13 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         border: 1px solid #f0f0f0;
         display: inline-block;
-        white-space: normal; /* Allow text wrapping inside items */
+        white-space: normal;
         vertical-align: top;
     }
-    
     .menu-item:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
-    
     .menu-header {
         display: flex;
         justify-content: space-between;
@@ -42,7 +39,6 @@
         padding-bottom: 10px;
         border-bottom: 1px solid #f0f0f0;
     }
-    
     .item-name {
         font-size: 1.3em;
         font-weight: 600;
@@ -50,14 +46,12 @@
         margin: 0;
         word-break: break-word;
     }
-    
     .item-price {
         font-size: 1.2em;
         font-weight: bold;
         color: #e74c3c;
         margin-left: 15px;
     }
-    
     .item-description {
         color: #555;
         line-height: 1.6;
@@ -65,7 +59,6 @@
         word-break: break-word;
         white-space: normal;
     }
-    
     .item-allergens {
         font-size: 0.9em;
         color: #7f8c8d;
@@ -73,7 +66,6 @@
         border-top: 1px dashed #e0e0e0;
         word-break: break-word;
     }
-    
     .menu-title {
         color: #2c3e50;
         text-align: center;
@@ -84,43 +76,38 @@
         position: sticky;
         left: 20px;
     }
-    
-    /* Hide scrollbar for cleaner look */
     .menu-container::-webkit-scrollbar {
         height: 8px;
     }
-    
     .menu-container::-webkit-scrollbar-track {
         background: #f1f1f1;
         border-radius: 10px;
     }
-    
     .menu-container::-webkit-scrollbar-thumb {
         background: #888;
         border-radius: 10px;
     }
-    
     .menu-container::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
 </style>
 
+<!-- Menu container with scrollable items -->
 <div class="menu-container">
     <h1 class="menu-title">Our Restaurant Menu</h1>
-    
     <div class="menu-scroll">
         {% if menu_items %}
             {% for item in menu_items %}
-            <div class="menu-item">
-                <div class="menu-header">
-                    <h3 class="item-name">{{ item.name }}</h3>
-                    <span class="item-price">${{ item.price }}</span>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3 class="item-name">{{ item.name }}</h3>
+                        <span class="item-price">${{ item.price }}</span>
+                    </div>
+                    <p class="item-description">{{ item.description }}</p>
+                    {% if item.allergens %}
+                        <p class="item-allergens"><strong>Allergens:</strong> {{ item.allergens }}</p>
+                    {% endif %}
                 </div>
-                <p class="item-description">{{ item.description }}</p>
-                {% if item.allergens %}
-                <p class="item-allergens"><strong>Allergens:</strong> {{ item.allergens }}</p>
-                {% endif %}
-            </div>
             {% endfor %}
         {% else %}
             <div class="menu-item" style="min-width: 80vw;">

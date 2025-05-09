@@ -1,26 +1,29 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
-from .models import Staff, Schedule, TimeOffRequest
 from django.contrib import messages
+from .models import Staff, Schedule, TimeOffRequest
 
+# View to list all staff members
 def list_staff(request):
     staff = Staff.objects.all()
     return render(request, 'staff_scheduling/list_staff.html', {'staff': staff})
 
+# View to display all staff schedules
 def all_schedules(request):
     staff_members = Staff.objects.all()
     schedules = Schedule.objects.all().order_by('shift_date', 'start_time')
-    return render(request, 'staff_scheduling/all_schedules.html', {
-        'staff_members': staff_members,
-        'schedules': schedules
-    })
+    return render(
+        request,
+        'staff_scheduling/all_schedules.html',
+        {'staff_members': staff_members, 'schedules': schedules}
+    )
 
+# View to handle time-off request submission
 def request_time_off(request):
     if request.method == 'POST':
         staff_id = request.POST.get('staff_id')
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        additional_info = request.POST.get('reason')  
+        reason = request.POST.get('reason')
 
         try:
             staff = Staff.objects.get(id=staff_id)
@@ -28,7 +31,7 @@ def request_time_off(request):
                 staff=staff,
                 start_date=start_date,
                 end_date=end_date,
-                additional_info=additional_info,  
+                additional_info=reason,
                 status='Pending'
             )
             messages.success(request, "Time-off request submitted!")
@@ -39,6 +42,7 @@ def request_time_off(request):
     staff = Staff.objects.all()
     return render(request, 'staff_scheduling/request_time_off.html', {'staff': staff})
 
+# View to manage time-off requests
 def manage_time_off(request, request_id):
     time_off_request = get_object_or_404(TimeOffRequest, id=request_id)
     if request.method == 'POST':
@@ -47,8 +51,13 @@ def manage_time_off(request, request_id):
         time_off_request.save()
         messages.success(request, "Time-off request updated!")
         return redirect('list_staff')
-    return render(request, 'staff_scheduling/manage_time_off.html', {'request': time_off_request})
+    return render(
+        request,
+        'staff_scheduling/manage_time_off.html',
+        {'request': time_off_request}
+    )
 
+# View to create a new staff schedule
 def create_schedule(request):
     if request.method == 'POST':
         staff_id = request.POST.get('staff_id')
@@ -72,6 +81,7 @@ def create_schedule(request):
     staff = Staff.objects.all()
     return render(request, 'staff_scheduling/create_schedule.html', {'staff': staff})
 
+# View to create a new staff member
 def create_staff(request):
     if request.method == 'POST':
         name = request.POST.get('staff_name')

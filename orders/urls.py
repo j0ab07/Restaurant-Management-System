@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+# URL patterns for orders app
 urlpatterns = [
     path('menu/', views.menu, name='menu'),  
     path('orders/menu/add/', views.add_menu_item, name='add_menu_item'),  # Admin-only add form

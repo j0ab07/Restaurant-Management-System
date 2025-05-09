@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Inline styles for orders list -->
 <style>
     .orders-container {
         max-width: 100%;
@@ -31,17 +32,25 @@
     .order-card:hover {
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .status-pending { 
+    .status-pending {
         border-left: 4px solid #ffa000;
         background-color: #fff3e0;
     }
-    .status-preparing { 
+    .status-preparing {
         border-left: 4px solid #2196f3;
         background-color: #e3f2fd;
     }
-    .status-ready { 
+    .status-ready {
         border-left: 4px solid #4caf50;
         background-color: #e8f5e9;
+    }
+    .status-delivered {
+        border-left: 4px solid #388e3c;
+        background-color: #e8f5e9;
+    }
+    .status-cancelled {
+        border-left: 4px solid #d32f2f;
+        background-color: #ffebee;
     }
     .order-meta {
         margin-bottom: 10px;
@@ -102,55 +111,51 @@
     }
 </style>
 
+<!-- Orders list container -->
 <div class="orders-container">
     <div class="order-header">
         <h1>Orders</h1>
-        <a href="{% url 'place_order' %}" class="btn">PLACE NEW ORDER</a>
+        <a href="{% url 'place_order' %}" class="btn">Place New Order</a>
     </div>
 
     {% if orders %}
-    <div class="orders-scroll-container">
-        {% for order in orders %}
-        <div class="order-card status-{{ order.status|lower }}">
-            <div class="order-meta">
-                <div class="order-id">Order #{{ order.order_id|default:"N/A" }}</div>
-                <div class="order-time">
-                    {{ order.time_placed|time:"H:i" }} on {{ order.time_placed|date:"M d" }}
+        <div class="orders-scroll-container">
+            {% for order in orders %}
+                <div class="order-card status-{{ order.status|lower }}">
+                    <div class="order-meta">
+                        <div class="order-id">Order #{{ order.order_id|default:"N/A" }}</div>
+                        <div class="order-time">
+                            {{ order.time_placed|time:"H:i" }} on {{ order.time_placed|date:"M d" }}
+                        </div>
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Table:</span> {{ order.table_ID.table_no }}
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Staff:</span> {{ order.staff_ID.staff_name }}
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Status:</span>
+                        <span style="text-transform: capitalize;">{{ order.get_status_display }}</span>
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Items:</span>
+                        <div class="menu-items-list">
+                            {% for item in order.orderitem_set.all %}
+                                <div class="menu-item">
+                                    {{ item.menu_id.name }} (${{ item.menu_id.price|default:"0.00" }})
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="{% url 'prepare_order' order.order_id %}" class="edit-btn">Edit Order</a>
                 </div>
-            </div>
-            
-            <div class="order-detail">
-                <span class="detail-label">Table:</span> {{ order.table_ID.table_no }}
-            </div>
-            
-            <div class="order-detail">
-                <span class="detail-label">Staff:</span> {{ order.staff_ID.staff_name }}
-            </div>
-            
-            <div class="order-detail">
-                <span class="detail-label">Status:</span> 
-                <span style="text-transform: capitalize;">{{ order.status }}</span>
-            </div>
-            
-            <div class="order-detail">
-                <span class="detail-label">Items:</span>
-                <div class="menu-items-list">
-                    {% for item in order.orderitem_set.all %}
-                    <div class="menu-item">{{ item.menu_id.name }} (${% if item.menu_id.price %}{{ item.menu_id.price }}{% else %}0.00{% endif %})</div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-            <a href="/admin/orders/order/{{ order.order_id }}/change/" class="edit-btn" target="_blank">
-                Edit Order
-            </a>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     {% else %}
-    <div class="no-orders">
-        <p>No orders available.</p>
-    </div>
+        <div class="no-orders">
+            <p>No orders available.</p>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

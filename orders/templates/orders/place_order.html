@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Inline styles for place order form -->
 <style>
     h1 {
         text-align: center;
@@ -20,7 +21,9 @@
         margin-top: 10px;
         align-self: flex-start;
     }
-    select, textarea, button {
+    select,
+    textarea,
+    button {
         padding: 8px;
         border: 1px solid black;
         border-radius: 4px;
@@ -62,6 +65,7 @@
     }
 </style>
 
+<!-- Place order form -->
 <h1>Place Order</h1>
 
 {% if messages %}
@@ -72,7 +76,6 @@
 
 <form method="POST">
     {% csrf_token %}
-
     <label for="table_no">Table Number</label>
     <select name="table_no" id="table_no" required>
         <option value="" disabled selected>Select Table Number</option>
@@ -97,10 +100,7 @@
     <select name="menu_items" id="menu_items" multiple required>
         {% for menu in menus %}
             <option value="{{ menu.menu_id }}">
-                <span class="menu-item-option">
-                    <span>{{ menu.name }}</span>
-                    <span>${{ menu.price }}</span>
-                </span>
+                {{ menu.name }} (${{ menu.price }})
             </option>
         {% endfor %}
     </select>
@@ -111,6 +111,7 @@
     <button type="submit">Place Order</button>
 </form>
 
+<!-- Back to orders link -->
 <div class="back-link">
     <a href="{% url 'list_orders' %}">← Back to Orders</a>
 </div>

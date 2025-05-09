@@ -2,6 +2,7 @@ from django import forms
 from .models import Menu, MenuIngredients
 from inventory.models import Stock
 
+# Form for adding new menu items
 class AddMenuItemForm(forms.ModelForm):
     class Meta:
         model = Menu
@@ -11,6 +12,7 @@ class AddMenuItemForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'step': '0.01'}),
         }
         
+# Form for adding ingredients to menu items
 class MenuIngredientForm(forms.ModelForm):
     class Meta:
         model = MenuIngredients

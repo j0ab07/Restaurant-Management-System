@@ -6,6 +6,7 @@
     <title>Restaurant Management System</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Inline styles for base layout -->
     <style>
         body {
             margin: 0;
@@ -24,14 +25,16 @@
             text-decoration: none;
             color: black;
         }
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
         .container {
-            height: calc(100vh - 100px); 
+            min-height: calc(100vh - 100px);
             display: flex;
-            justify-content: center;  
-            align-items: center;      
-            flex-direction: column;   
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             text-align: center;
-            background-image: url('https://example.com/scenic-landscape.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -49,6 +52,7 @@
     </style>
 </head>
 <body class="{% if '/staff/' in request.path or '/orders/' in request.path or '/inventory/' in request.path %}show-admin-links{% endif %}">
+    <!-- Navigation bar -->
     <div class="nav-bar">
         <div>
             <a href="{% url 'home' %}">Home</a>
@@ -62,10 +66,12 @@
             <a href="{% url 'contact' %}">Contact</a>
         </div>
     </div>
+    <!-- Main content area -->
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
+    <!-- Footer -->
     <footer>
         <p>© 2025 Restaurant Management System. All rights reserved.</p>
     </footer>

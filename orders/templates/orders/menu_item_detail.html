@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Inline styles for menu item details -->
 <style>
     .menu-item-container {
         max-width: 800px;
@@ -28,8 +29,30 @@
     .form-group {
         margin-bottom: 15px;
     }
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+    .form-group select,
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    button {
+        padding: 10px 15px;
+        background: transparent;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+    }
 </style>
 
+<!-- Menu item details and ingredient management -->
 <div class="menu-item-container">
     <h1>{{ menu_item.name }}</h1>
     <p>{{ menu_item.description }}</p>
@@ -40,18 +63,18 @@
         <h3>Ingredients:</h3>
         {% if ingredients %}
             {% for ingredient in ingredients %}
-            <div class="ingredient-item">
-                <span>
-                    {{ ingredient.stock_item.item_name }} 
-                    ({{ ingredient.quantity_required }} units)
-                </span>
-                <span>
-                    Current Stock: {{ ingredient.stock_item.quantity }}
-                    {% if ingredient.stock_item.quantity < 10 %}
-                        <span style="color: red;">(LOW STOCK)</span>
-                    {% endif %}
-                </span>
-            </div>
+                <div class="ingredient-item">
+                    <span>
+                        {{ ingredient.stock_item.item_name }}
+                        ({{ ingredient.quantity_required }} units)
+                    </span>
+                    <span>
+                        Current Stock: {{ ingredient.stock_item.quantity }}
+                        {% if ingredient.stock_item.quantity < 10 %}
+                            <span style="color: red;">(LOW STOCK)</span>
+                        {% endif %}
+                    </span>
+                </div>
             {% endfor %}
         {% else %}
             <p>No ingredients listed for this item.</p>
@@ -63,11 +86,11 @@
         <form method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label>Stock Item</label>
+                <label for="{{ form.stock_item.id_for_label }}">Stock Item</label>
                 {{ form.stock_item }}
             </div>
             <div class="form-group">
-                <label>Quantity Required</label>
+                <label for="{{ form.quantity_required.id_for_label }}">Quantity Required</label>
                 {{ form.quantity_required }}
             </div>
             <button type="submit">Add Ingredient</button>

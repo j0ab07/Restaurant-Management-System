@@ -1,6 +1,7 @@
 from django import forms
 from .models import Stock
 
+# Form for adding new stock items
 class AddStockForm(forms.ModelForm):
     class Meta:
         model = Stock

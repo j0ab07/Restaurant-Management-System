@@ -1,3 +1,5 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Placeholder for staff_scheduling app tests
+class StaffSchedulingTests(TestCase):
+    pass

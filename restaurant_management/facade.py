@@ -1,7 +1,8 @@
 from reservations.models import Reservation, Table
-from orders.models import Order, Menu, Order_Items
+from orders.models import Order, Menu, OrderItem
 from staff_scheduling.models import TimeOffRequest, Staff
 
+# Facade for restaurant-related operations
 class RestaurantFacade:
     @staticmethod
     def submit_reservation(customer_name, customer_email, table_id, date, time, number_of_guests):
@@ -24,13 +25,14 @@ class RestaurantFacade:
             table_ID=table,
             staff_ID=staff,
             special_requests=special_requests,
-            status='Received'
+            status='pending'
         )
         for item_id in item_ids:
-            menu_item = Menu.objects.get(menu_item_ID=item_id)
-            Order_Items.objects.create(order_ID=order, item_ID=menu_item)
+            menu_item = Menu.objects.get(menu_id=item_id)
+            OrderItem.objects.create(order_id=order, menu_id=menu_item)
         return order
 
+# Facade for scheduling-related operations
 class SchedulingFacade:
     @staticmethod
     def request_time_off(staff_id, start_date, end_date, reason):

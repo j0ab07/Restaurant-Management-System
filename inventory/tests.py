@@ -1,3 +1,5 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Placeholder for inventory app tests
+class InventoryTests(TestCase):
+    pass
