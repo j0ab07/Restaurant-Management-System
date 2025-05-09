@@ -57,30 +57,6 @@ def manage_time_off(request, request_id):
         {'request': time_off_request}
     )
 
-# View to create a new staff schedule
-def create_schedule(request):
-    if request.method == 'POST':
-        staff_id = request.POST.get('staff_id')
-        shift_date = request.POST.get('shift_date')
-        start_time = request.POST.get('start_time')
-        end_time = request.POST.get('end_time')
-
-        try:
-            staff = Staff.objects.get(id=staff_id)
-            Schedule.objects.create(
-                staff_id=staff,
-                shift_date=shift_date,
-                start_time=start_time,
-                end_time=end_time
-            )
-            messages.success(request, "Schedule created successfully!")
-            return redirect('list_staff')
-        except Staff.DoesNotExist:
-            messages.error(request, "Invalid staff selected.")
-
-    staff = Staff.objects.all()
-    return render(request, 'staff_scheduling/create_schedule.html', {'staff': staff})
-
 # View to create a new staff member
 def create_staff(request):
     if request.method == 'POST':
